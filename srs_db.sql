@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 25, 2016 at 11:46 AM
+-- Generation Time: Sep 26, 2016 at 02:44 PM
 -- Server version: 10.0.17-MariaDB
 -- PHP Version: 5.6.14
 
@@ -27,7 +27,8 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `sales listing` (
-  `sale_no` varchar(5) NOT NULL,
+  `stock_code` int(4) NOT NULL,
+  `sale_id` int(4) NOT NULL,
   `date` date NOT NULL,
   `amount` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -39,10 +40,9 @@ CREATE TABLE `sales listing` (
 --
 
 CREATE TABLE `stock inquiry` (
-  `date` date NOT NULL,
-  `stock_code` int(11) NOT NULL,
-  `in` int(3) NOT NULL,
-  `out` int(3) NOT NULL,
+  `stock_code` int(4) NOT NULL,
+  `stock_in` int(3) NOT NULL,
+  `stock_out` int(3) NOT NULL,
   `balance` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -66,6 +66,20 @@ CREATE TABLE `stock item` (
 --
 
 --
+-- Indexes for table `sales listing`
+--
+ALTER TABLE `sales listing`
+  ADD PRIMARY KEY (`stock_code`),
+  ADD KEY `INDEX` (`sale_id`);
+
+--
+-- Indexes for table `stock inquiry`
+--
+ALTER TABLE `stock inquiry`
+  ADD PRIMARY KEY (`stock_code`),
+  ADD KEY `INDEX` (`balance`);
+
+--
 -- Indexes for table `stock item`
 --
 ALTER TABLE `stock item`
@@ -76,10 +90,36 @@ ALTER TABLE `stock item`
 --
 
 --
+-- AUTO_INCREMENT for table `sales listing`
+--
+ALTER TABLE `sales listing`
+  MODIFY `stock_code` int(4) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `stock inquiry`
+--
+ALTER TABLE `stock inquiry`
+  MODIFY `stock_code` int(4) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `stock item`
 --
 ALTER TABLE `stock item`
   MODIFY `stock_code` int(4) NOT NULL AUTO_INCREMENT;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `sales listing`
+--
+ALTER TABLE `sales listing`
+  ADD CONSTRAINT `sales listing_ibfk_1` FOREIGN KEY (`sale_id`) REFERENCES `stock item` (`stock_code`);
+
+--
+-- Constraints for table `stock inquiry`
+--
+ALTER TABLE `stock inquiry`
+  ADD CONSTRAINT `stock inquiry_ibfk_1` FOREIGN KEY (`balance`) REFERENCES `sales listing` (`stock_code`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
