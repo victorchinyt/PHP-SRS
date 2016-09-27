@@ -18,46 +18,31 @@
             <p><a href="#newMedicine">New Medicine</a></p>
             <p><a href="#sale">View Sale</a></p>
             <p><a href="#stockUpdate">Stock Update</a></p>
-            <div ng-view></div>
-            
-             <script type="text/ng-template" id="newMedicine.html">
-                <form>
-                    <h3>New Medicine</h3>
-                    Med. Name: <br/><input type="text" name="med" /><br/><br/>
-                    Med. Code: <br/><input type="text" name="mcode" /><br/><br/>
-                    Description: <br/><input type="text" name="mdesc" /><br/><br/>
-                    Location: <br/><input type="text" name="mloc" /><br/><br/>
-                    Balance: <br/><input type="number" min="0" name="mbal" /><br/><br/>
-                    Cost: <br/><input type="text" name="mcost" /><br/><br/>
-                    Selling Price: <br/><input type="text" name="mprice" /><br/><br/>
-                    <input type="submit" value="Submit"> 
-                    <input type="reset" value="Reset"> 
-                </form>
-            </script>
+            <div class="ng-view"></div>             
             
              <script type="text/ng-template" id="sale.html">
                 <form>
                     <h3>Sale</h3>
-                    Sale no: <br/><input type="text" name="saleno" /><br/><br/>
-                    Date: <br/><input type="date" name="saledate" /><br/><br/>
-                    Amount: <br/><input type="currency" name="saleamt" /><br/><br/>
-                    <input type="submit" value="Submit"> 
-                    <input type="reset" value="Reset"> 
+                    Sale no: <br/><input type="text" class="form-control" name="saleno" /><br/><br/>
+                    Date: <br/><input type="date" class="form-control" name="saledate" /><br/><br/>
+                    Amount: <br/><input type="text" class="form-control" name="saleamt" /><br/><br/>
+                    <input class="btn" type="submit" value="Submit"> 
+                    <input class="btn" type="reset" value="Reset"> 
                 </form>
             </script>
             
              <script type="text/ng-template" id="stockUpdate.html">
                 <form>
                     <h3>Stock Update</h3>
-                    Sale no: <br/><input type="text" name="saleno" /><br/><br/>
-                    Supply no: <br/><input type="text" name="supplyno" /><br/><br/>
-                    Med. Code: <br/><input type="text" name="mcode" /><br/><br/>
-                    Date: <br/><input type="date" name="saledate" /><br/>/><br/>
-                    Stock In: <br/><input type="number" min="0" name="min" /><br/><br/>
-                    Stock Out: <br/><input type="number" min="0" name="mout" /><br/><br/>
-                    Balance: <br/><input type="number" min="0" name="mbal" /><br/><br/>
-                    <input type="submit" value="Submit"> 
-                    <input type="reset" value="Reset"> 
+                    Sale no: <br/><input type="text" class="form-control" name="saleno" /><br/><br/>
+                    Supply no: <br/><input type="text" class="form-control" name="supplyno" /><br/><br/>
+                    Med. Code: <br/><input type="text" class="form-control" name="mcode" /><br/><br/>
+                    Date: <br/><input type="date" class="form-control" name="saledate" /><br/><br/>
+                    Stock In: <br/><input type="number" class="form-control" min="0" name="min" /><br/><br/>
+                    Stock Out: <br/><input type="number" class="form-control" min="0" name="mout" /><br/><br/>
+                    Balance: <br/><input type="number" class="form-control" min="0" name="mbal" /><br/><br/>
+                    <input class="btn" type="submit" value="Submit"> 
+                    <input class="btn" type="reset" value="Reset"> 
                 </form>
             </script>
             
