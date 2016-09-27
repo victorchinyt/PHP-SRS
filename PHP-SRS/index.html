@@ -31,7 +31,10 @@
                 <p>Sales ID: <input type="text" /></p>
             </div>
             <div class="col-sm-6">
-                <p>Date: <input id="date" name="date" /></p>
+                <form>
+                    <p>Date: <input type="date" id="date" name="date" /></p>
+                </form>
+                
             </div>
         </div>
         <div class="row">
@@ -62,19 +65,20 @@
                 </div>
             </div>
             <div class="col-sm-2">
-                <P><button>ADD</button></P>
-                <P><button>DELETE</button></P>
-                <P><button>SEARCH</button></P>
-                <P><button>SAVE</button></P>
-                <P><button>PRINT</button></P>
-                <P><button>EJECT</button></P>            
+                <P><button type="button">ADD</button></P>
+                <P><button type="button">DELETE</button></P>
+                <P><button type="button">SEARCH</button></P>
+                <P><button type="button">SAVE</button></P>
+                <P><button type="button">PRINT</button></P>
+                <P><button type="button">EJECT</button></P><br/>            
+                <P><button type="button">SUBMIT</button></P>            
             </div>
         </div>
         <div class="row">
             <div class="col-sm-6">
             </div>
             <div class="col-sm-6">
-                <div class"row">
+                <div class="row">
                     <div class="col-sm-12">
                         <p id="amount"><small id="tamount">Total Amount:</small>{{amount}}</p>
                     </div>
