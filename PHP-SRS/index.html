@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="myApp">
+<head>
+	 <title>SRS System</title>
+	 <meta charset="utf-8" />
+	 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	 <!-- Bootstrap -->
+	 <link href="css/bootstrap.min.css" rel="stylesheet" />
+	 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	 <!--[if lt IE 9]>
+			<script src="js/html5shiv.js"></script>
+			<script src="js/respond.min.js"></script>
+	 <![endif]-->
+    <link href="css/style.css" rel="stylesheet" />
+</head>
+<body>
+	<div data-ng-controller="myCtrl">
+		<ul class="nav nav-pills">
+			<li data-ng-class="menuClass('cashsale')"><a href="index.html">Cash Sale</a></li>
+			<li data-ng-class="menuClass('stockitem')"><a href="item.html">Stock Item</a></li>
+            <li data-ng-class="menuClass('stockinquiry')"><a href="#!stockinquiry">Stock Inquiry</a></li>
+		</ul>
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>Cash Sales</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <p>Sales ID: <input type="text" /></p>
+            </div>
+            <div class="col-sm-6">
+                <p>Date: <input id="date" name="date" /></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead id="tbhead">
+                            <tr>
+                                <th>Stock Code</th>
+                                <th>Stock Name</th>
+                                <th>Quantity</th>
+                                <th>Unit Price (RM)</th>
+                                <th>Discount (%)</th>
+                                <th>Total Price (RM)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbbody">    
+                            <tr>
+                                <td>{{stockcode}}</td>
+                                <td>{{stockname}}</td>
+                                <td>{{quantity}}</td>
+                                <td>{{unitprice}}</td>
+                                <td>{{discount}}</td>
+                                <td>{{totalprice}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <P><button>ADD</button></P>
+                <P><button>DELETE</button></P>
+                <P><button>SEARCH</button></P>
+                <P><button>SAVE</button></P>
+                <P><button>PRINT</button></P>
+                <P><button>EJECT</button></P>            
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+            </div>
+            <div class="col-sm-6">
+                <div class"row">
+                    <div class="col-sm-12">
+                        <p id="amount"><small id="tamount">Total Amount:</small>{{amount}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+    
+	<script src="js/angular.min.js"></script>
+	<script src="js/angular-route.min.js"></script>
+	<script src="js/appmenu.js"></script>
+    
+</body>
+</html>
+
