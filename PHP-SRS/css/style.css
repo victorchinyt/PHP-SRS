@@ -23,3 +23,7 @@ div{
 label{
     padding-bottom: 20px;
 }
+
+input{
+    width: 130px;
+}

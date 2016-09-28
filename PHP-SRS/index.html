@@ -14,13 +14,17 @@
 	 <![endif]-->
     <link href="css/style.css" rel="stylesheet" />
 </head>
-<body>
-	<div data-ng-controller="myCtrl">
-		<ul class="nav nav-pills">
-			<li data-ng-class="menuClass('cashsale')"><a href="index.html">Cash Sale</a></li>
-			<li data-ng-class="menuClass('stockitem')"><a href="item.html">Stock Item</a></li>
-            <li data-ng-class="menuClass('stockinquiry')"><a href="#!stockinquiry">Stock Inquiry</a></li>
-		</ul>
+<body data-ng-controller = "postCtrl">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <ul class="nav nav-pills">
+                    <li data-ng-class="menuClass('cashsale')"><a href="index.html">Cash Sale</a></li>
+                    <li data-ng-class="menuClass('stockitem')"><a href="item.html">Stock Item</a></li>
+                    <li data-ng-class="menuClass('stockinquiry')"><a href="#!stockinquiry">Stock Inquiry</a></li>
+                </ul>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm-12">
                 <h1>Cash Sales</h1>
@@ -41,7 +45,7 @@
             <div class="col-sm-10">
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover">
-                        <thead id="tbhead">
+                        <thead>
                             <tr>
                                 <th>Stock Code</th>
                                 <th>Stock Name</th>
@@ -51,27 +55,146 @@
                                 <th>Total Price (RM)</th>
                             </tr>
                         </thead>
-                        <tbody id="tbbody">    
+                        <tbody>    
                             <tr>
-                                <td>{{stockcode}}</td>
-                                <td>{{stockname}}</td>
-                                <td>{{quantity}}</td>
-                                <td>{{unitprice}}</td>
-                                <td>{{discount}}</td>
-                                <td>{{totalprice}}</td>
+                                <td>
+                                    <input type="text" name="input" id="scode">
+                                </td>
+                                <td>
+                                    <input type="text" name="input" id="sname">
+                                </td>
+                                <td>
+                                    <input type="number" id="quantity" data-ng-model="num1" />
+                                </td>
+                                <td>
+                                    <input type="number" id="uprice" data-ng-model="num2" />
+                                </td>
+                                <td>
+                                    <input type="number" id="discount" data-ng-model="num3" data-ng-init="num3=0"/>
+                                </td>
+                                <td>
+                                    <p>{{num1 * num2 | number:2}}</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody>    
+                            <tr>
+                                <td>
+                                    <input type="text" name="input" id="scode">
+                                </td>
+                                <td>
+                                    <input type="text" name="input" id="sname">
+                                </td>
+                                <td>
+                                    <input type="number" id="quantity" data-ng-model="num4" />
+                                </td>
+                                <td>
+                                    <input type="number" id="uprice" data-ng-model="num5" />
+                                </td>
+                                <td>
+                                    <input type="number" id="discount" data-ng-model="num6" data-ng-init="num6=0"/>
+                                </td>
+                                <td>
+                                    <p>{{num4 * num5 | number:2}}</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody>    
+                            <tr>
+                                <td>
+                                    <input type="text" name="input" id="scode">
+                                </td>
+                                <td>
+                                    <input type="text" name="input" id="sname">
+                                </td>
+                                <td>
+                                    <input type="number" id="quantity" data-ng-model="num7" />
+                                </td>
+                                <td>
+                                    <input type="number" id="uprice" data-ng-model="num8" />
+                                </td>
+                                <td>
+                                    <input type="number" id="discount" data-ng-model="num9" data-ng-init="num9=0"/>
+                                </td>
+                                <td>
+                                    <p>{{num7 * num8 | number:2}}</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody>    
+                            <tr>
+                                <td>
+                                    <input type="text" name="input" id="scode">
+                                </td>
+                                <td>
+                                    <input type="text" name="input" id="sname">
+                                </td>
+                                <td>
+                                    <input type="number" id="quantity" data-ng-model="num10" />
+                                </td>
+                                <td>
+                                    <input type="number" id="uprice" data-ng-model="num11" />
+                                </td>
+                                <td>
+                                    <input type="number" id="discount" data-ng-model="num12" data-ng-init="num12=0"/>
+                                </td>
+                                <td>
+                                    <p>{{num10 * num11 | number:2}}</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody>    
+                            <tr>
+                                <td>
+                                    <input type="text" name="input" id="scode">
+                                </td>
+                                <td>
+                                    <input type="text" name="input" id="sname">
+                                </td>
+                                <td>
+                                    <input type="number" id="quantity" data-ng-model="num13" />
+                                </td>
+                                <td>
+                                    <input type="number" id="uprice" data-ng-model="num14" />
+                                </td>
+                                <td>
+                                    <input type="number" id="discount" data-ng-model="num15" data-ng-init="num15=0"/>
+                                </td>
+                                <td>
+                                    <p>{{num13 * num14 | number:2}}</p>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+                        
             <div class="col-sm-2">
-                <P><button type="button">ADD</button></P>
-                <P><button type="button">DELETE</button></P>
-                <P><button type="button">SEARCH</button></P>
-                <P><button type="button">SAVE</button></P>
-                <P><button type="button">PRINT</button></P>
-                <P><button type="button">EJECT</button></P><br/>            
-                <P><button type="button">SUBMIT</button></P>            
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input class="btn" type="button" value="Add">
+                    </div>
+                </div><br />
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input class="btn" type="reset" value="Reset"> 
+                    </div>
+                </div><br />
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input class="btn" type="submit" value="submit"> 
+                    </div>
+                </div><br />
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input class="btn" type="button" value="Print"> 
+                    </div>
+                </div><br />
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input class="btn" type="button" value="Search"> 
+                    </div>
+                </div>            
             </div>
         </div>
         <div class="row">
@@ -80,17 +203,16 @@
             <div class="col-sm-6">
                 <div class="row">
                     <div class="col-sm-12">
-                        <p id="amount"><small id="tamount">Total Amount:</small>{{amount}}</p>
+                        <p id="amount"><small id="tamount">Total Amount:</small>{{(num1 * num2) + (num4 * num5) + (num7 * num8) + (num10 * num11) + (num13 * num14)|number:2}}</p>
                     </div>
                 </div>
             </div>
         </div>
-	</div>
-    
+    </div>
 	<script src="js/angular.min.js"></script>
 	<script src="js/angular-route.min.js"></script>
 	<script src="js/appmenu.js"></script>
-    
+    <script src="js/script.js"></script>
 </body>
 </html>
 
