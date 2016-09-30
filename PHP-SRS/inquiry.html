@@ -14,20 +14,23 @@
 	 <![endif]-->
     <link href="css/style.css" rel="stylesheet" />
 </head>
-<body>
-	<div data-ng-controller="myCtrl">
+<body data-ng-controller="myCtrl">
+    <div class="container">
+    <!-- div of navbar -->
+	<div>
 		<ul class="nav nav-pills">
 			<li data-ng-class="menuClass('cashsale')"><a href="index.html">Cash Sale</a></li>
 			<li data-ng-class="menuClass('stockitem')"><a href="item.php">Stock Item</a></li>
             <li data-ng-class="menuClass('stockinquiry')"><a href="inquiry.html">Stock Inquiry</a></li>
 			<li data-ng-class="menuClass('salerecord')"><a href="record.html">Sale Record</a></li>
 		</ul>
-		
-		<div class="row">
-			<div class="col-sm-12">
-				<h1>Stock Inquiry</h1>
-			</div>
-		</div>
+    </div> <!-- end of navbar div -->
+        
+    <!-- div of inquiry -->
+    <div>
+        <h1>Stock Inquiry</h1>
+        
+        <!-- div of search input -->
 		<div class="row">
             <div class="col-sm-4">
                 <p>Med. Code <input type="text" data-ng-model="stockCode"></p>
@@ -35,9 +38,11 @@
 			<div class="col-sm-4">
                 <p>Med. Name <input type="text" data-ng-model="stockName"></p>
             </div>
-        </div>
+        </div> <!-- end of search input div -->
 		
+        <!-- row containing whole table -->
 		<div class="row">
+            <!-- the only column inside row -->
 			<div class="col-sm-12">
 				<div class="table-responsive">
 					<table class="table table-bordered table-striped table-hover table-condensed">
@@ -61,19 +66,25 @@
 								<td headers="quantity">{{quantity}}</td>
 								<td headers="unit_price">{{unit_price}}</td>
 								<td headers="selling_price">{{selling_price}}</td>
-								
 							</tr>
 						</tbody>
 					</table>
 				</div>
-			</div>
-		</div>
+			</div> <!-- end of the only column inside table row -->
+		</div> <!-- end of whole table row -->
 		
-    </div>
-	<script src="js/angular.min.js"></script>
-	<script src="js/angular-route.min.js"></script>
-	<script src="js/appmenu.js"></script>
+    </div> <!-- end of inquiry div -->
+    </div> <!-- end of container div -->
     
+	        <!-- jQuery – required for Bootstrap plugins) --> 
+            <script src="js/jquery.min.js"></script> 
+            <!-- All Bootstrap  plug-ins  file --> 
+            <script src="js/bootstrap.min.js"></script> 
+            <!-- Basic AngularJS --> 
+            <script src="js/angular.min.js"></script> 
+            <script src="js/angular-route.min.js"></script>
+            <!-- Your Controller --> 
+            <script src="js/appmenu.js"></script>
 </body>
 </html>
 
