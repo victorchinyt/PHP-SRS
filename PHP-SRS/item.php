@@ -75,14 +75,10 @@
 <body data-ng-controller="myCtrl">
     <div class="container">
         <!-- div of navbar -->
-        <div>
-            <ul class="nav nav-pills">
-                <li data-ng-class="menuClass('cashsale')"><a href="index.html">Cash Sale</a></li>
-                <li data-ng-class="menuClass('stockitem')"><a href="item.php">Stock Item</a></li>
-                <li data-ng-class="menuClass('stockinquiry')"><a href="inquiry.html">Stock Inquiry</a></li>
-				<li data-ng-class="menuClass('salerecord')"><a href="record.html">Sale Record</a></li>
-            </ul>
-        </div> <!-- end of navbar div -->
+        
+        <?php
+			include("header.php");
+		?>
         
         <!-- div of form -->
         <div>        

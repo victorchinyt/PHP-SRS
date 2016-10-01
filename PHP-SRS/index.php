@@ -16,16 +16,11 @@
 </head>
 <body data-ng-controller = "postCtrl">
     <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <ul class="nav nav-pills">
-                    <li data-ng-class="menuClass('cashsale')"><a href="index.html">Cash Sale</a></li>
-                    <li data-ng-class="menuClass('stockitem')"><a href="item.php">Stock Item</a></li>
-                    <li data-ng-class="menuClass('stockinquiry')"><a href="inquiry.html">Stock Inquiry</a></li>
-                    <li data-ng-class="menuClass('salerecord')"><a href="record.html">Sale Record</a></li>
-                </ul>
-            </div>
-        </div>
+        
+        <?php
+			include("header.php");
+		?>
+        
         <div class="row">
             <div class="col-sm-12">
                 <h1>Cash Sales</h1>
