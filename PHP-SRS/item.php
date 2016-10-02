@@ -1,5 +1,4 @@
 <?php
-		
 	$dbServer = 'localhost';
 	$dbUserName = 'root';
 	$dbPassword = '';
@@ -34,8 +33,8 @@
 
         if (mysql_num_rows(($queryResult1)) == 0){
             $strSql1 = "CREATE TABLE $tableName1 (
-                            stock_name varchar(255) NOT NULL PRIMARY KEY,
-                            stock_code int(4) NOT NULL,
+                            stock_code int(8) NOT NULL PRIMARY KEY,
+                            stock_name varchar(255) NOT NULL,
                             description text NOT NULL,
                             location text NOT NULL,
                             quantity int(4) NOT NULL,
@@ -47,11 +46,7 @@
             }else{
                 echo "<p>Unable to create table. Error Code ". mysql_errno().":".mysql_error()."</p>";
             }
-        }else{
-            echo "<p>Sorry, table '$tableName1' already exist!<p>";
-        }
-	
-
+        }else echo "<p>Sorry, table '$tableName1' already exist!<p>";
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -93,11 +88,11 @@
                     <div class="row">
                         <!-- 1st column with label -->
                         <div class="col-sm-4">
-                            <p>Med. Name:</p>
+                            <p>Med. Code:</p>
                         </div>
                         <!-- 2nd column with textbox -->
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="stockname" id="stockname" maxlength="30" />
+                            <input type="text" class="form-control" name="stockcode" id="stockcode" maxlength="8" />
                         </div>
                     </div><br/>
 
@@ -105,11 +100,11 @@
                     <div class="row">
                         <!-- 1st column with label -->
                         <div class="col-sm-4">
-                            <p>Med. Code:</p>
+                            <p>Med. Name:</p>
                         </div>
                         <!-- 2nd column with textbox -->
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="stockcode" id="stockcode" maxlength="5" />
+                            <input type="text" class="form-control" name="stockname" id="stockname"/>
                         </div>
                     </div><br/>
 
@@ -230,28 +225,25 @@
 <?php
 	if(isset($_POST['BSubmit']))	
 	{
-		$Sname= $_POST['stockname']; 
 		$Scode= $_POST['stockcode']; 
+		$Sname= $_POST['stockname']; 
 		$Desc= $_POST['description'];
         $Location= $_POST['location']; 
 		$Mbal= $_POST['mbal']; 
 		$Mcost= $_POST['mcost'];
         $Mprice= $_POST['mprice'];
-        
-       
-	}	
 	
-    //insert the data into stock_item table
-	$sql = "INSERT INTO stock_item (stock_name, stock_code, description, location, quantity, costing, selling)
-	VALUES ('$Sname', '$Scode', '$Desc', '$Location', '$Mbal', '$Mcost','$Mprice')";
+        //insert the data into stock_item table
+        $sql = "INSERT INTO stock_item (stock_code, stock_name, description, location, quantity, costing, selling)
+        VALUES ('$Scode', '$Sname', '$Desc', '$Location', '$Mbal', '$Mcost','$Mprice')";
 
-	$sqlResult = @mysql_query($sql, $dbConnection);
-	if ($sqlResult === TRUE) {
-		echo "New stock insert successfully";
-	} else {
-		echo "<p>Unable to insert data. Error Code ". mysql_errno($dbConnection).":". mysql_error($dbConnection)."</p>";
+        $sqlResult = @mysql_query($sql, $dbConnection);
+        if ($sqlResult === TRUE) {
+            echo "New stock insert successfully";
+        } else {
+            echo "<p>Unable to insert data. Error Code ". mysql_errno($dbConnection).":". mysql_error($dbConnection)."</p>";
+        }
 	}
-    
 ?>  
 </body>
 </html>

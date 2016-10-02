@@ -1,5 +1,4 @@
 <?php
-		
 	$dbServer = 'localhost';
 	$dbUserName = 'root';
 	$dbPassword = '';
@@ -13,12 +12,10 @@
 		echo "<p>Successfully connect to the database server.</p>";
 	}
 
-
 	// Select database.
 	if(mysql_select_db($dbName, $dbConnection) === FALSE){
 			echo "<p>The database is not created.</p>";
 		}	
-
 ?>
 
 <!DOCTYPE html>
@@ -39,25 +36,23 @@
 </head>
 <body>
     <div class="container">
-        
         <?php
 			include("header.php");
 		?>
-        
         <div class="row">
             <div class="col-sm-12">
                 <h1>Cash Sales</h1>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <p>Sales ID: <input type="text" name="sid" id="sid" /></p>
+        <form action="index.php" method="post">
+            <div class="row">
+                <div class="col-sm-6">
+                    <p>Sales ID: <input type="text" name="sid" id="sid" /></p>
+                </div>
+                <div class="col-sm-6">
+                    <p>Date: <input type="date" name="date" id="date" /></p>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <p>Date: <input type="date" id="date" name="date" id="date" /></p>
-            </div>
-        </div>
-        <form>
             <div class="row">
                 <div class="col-sm-10">
                     <div class="table-responsive">
@@ -65,7 +60,6 @@
                             <thead>
                                 <tr>
                                     <th>Stock Code</th>
-                                    <th>Stock Name</th>
                                     <th>Quantity</th>
                                     <th>Unit Price (RM)</th>
                                     <th>Discount (%)</th>
@@ -78,10 +72,7 @@
                                         <input type="text" name="input" id="scode">
                                     </td>
                                     <td>
-                                        <input type="text" name="input" id="sname">
-                                    </td>
-                                    <td>
-                                        <input type="number" id="quantity" data-ng-model="num1" />
+                                        <input type="number" name="sq" id="quantity" data-ng-model="num1" />
                                     </td>
                                     <td>
                                         <input type="number" id="uprice" data-ng-model="num2" />
@@ -97,13 +88,10 @@
                             <tbody>    
                                 <tr>
                                     <td>
-                                        <input type="text" name="input" id="scode">
+                                        <input type="text" name="input2" id="scode">
                                     </td>
                                     <td>
-                                        <input type="text" name="input" id="sname">
-                                    </td>
-                                    <td>
-                                        <input type="number" id="quantity" data-ng-model="num4" />
+                                        <input type="number" name="sq2" id="quantity" data-ng-model="num4" />
                                     </td>
                                     <td>
                                         <input type="number" id="uprice" data-ng-model="num5" />
@@ -119,13 +107,10 @@
                             <tbody>    
                                 <tr>
                                     <td>
-                                        <input type="text" name="input" id="scode">
+                                        <input type="text" name="input3" id="scode">
                                     </td>
                                     <td>
-                                        <input type="text" name="input" id="sname">
-                                    </td>
-                                    <td>
-                                        <input type="number" id="quantity" data-ng-model="num7" />
+                                        <input type="number" name="sq3" id="quantity" data-ng-model="num7" />
                                     </td>
                                     <td>
                                         <input type="number" id="uprice" data-ng-model="num8" />
@@ -141,13 +126,10 @@
                             <tbody>    
                                 <tr>
                                     <td>
-                                        <input type="text" name="input" id="scode">
+                                        <input type="text" name="input4" id="scode">
                                     </td>
                                     <td>
-                                        <input type="text" name="input" id="sname">
-                                    </td>
-                                    <td>
-                                        <input type="number" id="quantity" data-ng-model="num10" />
+                                        <input type="number" name="sq4" id="quantity" data-ng-model="num10" />
                                     </td>
                                     <td>
                                         <input type="number" id="uprice" data-ng-model="num11" />
@@ -163,13 +145,10 @@
                             <tbody>    
                                 <tr>
                                     <td>
-                                        <input type="text" name="input" id="scode">
+                                        <input type="text" name="input5" id="scode">
                                     </td>
                                     <td>
-                                        <input type="text" name="input" id="sname">
-                                    </td>
-                                    <td>
-                                        <input type="number" id="quantity" data-ng-model="num13" />
+                                        <input type="number" name="sq5" id="quantity" data-ng-model="num13" />
                                     </td>
                                     <td>
                                         <input type="number" id="uprice" data-ng-model="num14" />
@@ -220,41 +199,55 @@
                 <div class="col-sm-6">
                     <div class="row">
                         <div class="col-sm-12">
-                            <small id="tamount">Total Amount:</small><p id="amount" name="amount">{{num1 * num2|number:2}}</p>
+                            <small id="tamount">Total Amount:</small><p id="amount">{{num1 * num2|number:2}}</p>
+                            <input type="hidden" name="amount" value='{{num1 * num2|number:2}}'>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-	<script src="js/angular.min.js"></script>
-	<script src="js/angular-route.min.js"></script>
-	<script src="js/appmenu.js"></script>
-    <script src="js/script.js"></script>
+    
+	        <!-- jQuery – required for Bootstrap plugins) --> 
+            <script src="js/jquery.min.js"></script> 
+            <!-- All Bootstrap  plug-ins  file --> 
+            <script src="js/bootstrap.min.js"></script> 
+            <!-- Basic AngularJS --> 
+            <script src="js/angular.min.js"></script> 
+            <script src="js/angular-route.min.js"></script>
+            <!-- Your Controller --> 
+            <script src="js/script.js"></script>
     
 <?php
 	if(isset($_POST['BSubmit']))	
 	{
-		$Sid= $_POST['sid']; 
-		$Sdate= $_POST['date']; 
-		$Samount= $_POST['amount'];        
-       
-	}	
+		$Sid = $_POST['sid'];
+		$Sdate = $_POST['date'];
+		$Samount = $_POST['amount'];
+        $Squantity = $_POST['sq']; // first row
+        $Scode = $_POST['input']; // first rows
 	
-    //insert the data into stock_item table
-	$sql = "INSERT INTO sales_record (sale_id, sale_date, amount)
-	VALUES ('$Sid', '$SDate', '$Samount')";
+        //insert the data into stock_item table
+        $sql = "INSERT INTO sales_record (sale_id, sale_date, amount)
+        VALUES ('$Sid', '$Sdate', '$Samount')";
+        
+        // only edit for first row
+        $sql_update = "UPDATE stock_item SET quantity=(quantity-$Squantity) WHERE stock_code=$Scode";
 
-	$sqlResult = @mysql_query($sql, $dbConnection);
-	if ($sqlResult === TRUE) {
-		echo "New stock insert successfully";
-	} else {
-		echo "<p>Unable to insert data. Error Code ". mysql_errno($dbConnection).":". mysql_error($dbConnection)."</p>";
-	}
-    
+        $sqlResult = @mysql_query($sql, $dbConnection);
+        if ($sqlResult === TRUE) {
+            echo "New sale insert successfully";
+        } else {
+            echo "<p>Unable to insert data. Error Code ". mysql_errno($dbConnection).":". mysql_error($dbConnection)."</p>";
+        }
+        
+        $sqlResult = @mysql_query($sql_update, $dbConnection);
+        if ($sqlResult === TRUE) {
+            echo "Stock update successfully";
+        } else {
+            echo "<p>Unable to update data. Error Code ". mysql_errno($sql_update).":". mysql_error($sql_update)."</p>";
+        }
+    }
 ?>  
-    
-    
 </body>
 </html>
-
