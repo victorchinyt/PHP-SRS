@@ -1,3 +1,26 @@
+<?php
+		
+	$dbServer = 'localhost';
+	$dbUserName = 'root';
+	$dbPassword = '';
+	$dbName = 'srs_db';
+
+	// Connect to server.
+	$dbConnection = @mysql_connect($dbServer,$dbUserName,$dbPassword);
+		if($dbConnection === FALSE){
+			echo "<p>Unable to connect to the database server.<br /> Error Code ". mysql_errno().":". mysql_error()."</p>";
+		}else {
+		echo "<p>Successfully connect to the database server.</p>";
+	}
+
+
+	// Select database.
+	if(mysql_select_db($dbName, $dbConnection) === FALSE){
+			echo "<p>The database is not created.</p>";
+		}	
+
+?>
+
 <!DOCTYPE html>
 <html lang="en" data-ng-app="myApp">
 <head>
@@ -14,7 +37,7 @@
 	 <![endif]-->
     <link href="css/style.css" rel="stylesheet" />
 </head>
-<body data-ng-controller = "postCtrl">
+<body>
     <div class="container">
         
         <?php
@@ -28,10 +51,10 @@
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <p>Sales ID: <input type="text" name="sid" /></p>
+                <p>Sales ID: <input type="text" name="sid" id="sid" /></p>
             </div>
             <div class="col-sm-6">
-                <p>Date: <input type="date" id="date" name="date" /></p>
+                <p>Date: <input type="date" id="date" name="date" id="date" /></p>
             </div>
         </div>
         <form>
@@ -67,7 +90,7 @@
                                         <input type="number" id="discount" data-ng-model="num3" data-ng-init="num3=0"/>
                                     </td>
                                     <td>
-                                        <p {{num1 * num2 | number:2}}><span></span></p>
+                                        <p>{{num1 * num2 | number:2}}</p>
                                     </td>
                                 </tr>
                             </tbody>
@@ -176,7 +199,7 @@
                     </div><br />
                     <div class="row">
                         <div class="col-sm-12">
-                            <input class="btn" type="submit" value="Submit"> 
+                            <input class="btn" type="submit" name="BSubmit" value="Submit">
                         </div>
                     </div><br />
                     <div class="row">
@@ -197,7 +220,7 @@
                 <div class="col-sm-6">
                     <div class="row">
                         <div class="col-sm-12">
-                            <p id="amount"><small id="tamount">Total Amount:</small>{{(num1 * num2) + (num4 * num5) + (num7 * num8) + (num10 * num11) + (num13 * num14)|number:2}}</p>
+                            <small id="tamount">Total Amount:</small><p id="amount" name="amount">{{num1 * num2|number:2}}</p>
                         </div>
                     </div>
                 </div>
@@ -208,6 +231,30 @@
 	<script src="js/angular-route.min.js"></script>
 	<script src="js/appmenu.js"></script>
     <script src="js/script.js"></script>
+    
+<?php
+	if(isset($_POST['BSubmit']))	
+	{
+		$Sid= $_POST['sid']; 
+		$Sdate= $_POST['date']; 
+		$Samount= $_POST['amount'];        
+       
+	}	
+	
+    //insert the data into stock_item table
+	$sql = "INSERT INTO sales_record (sale_id, sale_date, amount)
+	VALUES ('$Sid', '$SDate', '$Samount')";
+
+	$sqlResult = @mysql_query($sql, $dbConnection);
+	if ($sqlResult === TRUE) {
+		echo "New stock insert successfully";
+	} else {
+		echo "<p>Unable to insert data. Error Code ". mysql_errno($dbConnection).":". mysql_error($dbConnection)."</p>";
+	}
+    
+?>  
+    
+    
 </body>
 </html>
 

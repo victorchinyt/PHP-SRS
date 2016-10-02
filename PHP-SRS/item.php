@@ -2,7 +2,7 @@
 		
 	$dbServer = 'localhost';
 	$dbUserName = 'root';
-	$dbPassword = '7435916';
+	$dbPassword = '';
 	$dbName = 'srs_db';
 
 	// Connect to server.
