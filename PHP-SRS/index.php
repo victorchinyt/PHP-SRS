@@ -12,10 +12,39 @@
 		echo "<p>Successfully connect to the database server.</p>";
 	}
 
+    //Create Database
+        $strSql = "CREATE DATABASE $dbName";
+        $queryResult = @mysql_query($strSql, $dbConnection);
+        if($queryResult === FALSE){
+            echo "<p>Unable to create the database.</p>" . "<p>Error code " . mysql_errno($dbConnection) . ": " . mysql_error($dbConnection) . "</p>";
+        }else{
+            echo "<p>Database \”$dbName\” successfully created</p>";
+        }
+
+
 	// Select database.
 	if(mysql_select_db($dbName, $dbConnection) === FALSE){
 			echo "<p>The database is not created.</p>";
 		}	
+
+    /*Check and Create table*/
+        $tableName2 = 'sales_record';
+        $strSql2 = "SHOW TABLES LIKE '$tableName2' ";
+        $queryResult2 = @mysql_query($strSql2, $dbConnection);	
+
+        if (mysql_num_rows(($queryResult2)) == 0){
+            $strSql2 = "CREATE TABLE $tableName2 (
+                            sale_id VARCHAR(255) NOT NULL,
+                            sale_date DATE NOT NULL,
+                            amount DECIMAL(10,2) NOT NULL)";
+            $queryResult2 = @mysql_query($strSql2, $dbConnection);
+            if($queryResult2){
+                echo "<p>Table: '$tableName2' has been succesfully created.</p>";
+            }else{
+                echo "<p>Unable to create table. Error Code ". mysql_errno().":".mysql_error()."</p>";
+            }
+        }else echo "<p>Sorry, table '$tableName2' already exist!<p>";
+    
 ?>
 
 <!DOCTYPE html>

@@ -1,3 +1,27 @@
+<?php
+if(isset($_POST['search']))
+{
+    $saleToSearch = $_POST['saleToSearch'];
+    // search in all table columns
+    // using concat mysql function
+    $query = "SELECT * FROM `sales_record` WHERE CONCAT(`sale_id`, `sale_date`, `amount`) LIKE '%".$saleToSearch."%'";
+    $search_result = filterTable($query);
+    
+}
+ else {
+    $query = "SELECT * FROM `sales_record`";
+    $search_result = filterTable($query);
+}
+
+// function to connect and execute the query
+function filterTable($query)
+{
+    $connect = mysqli_connect("localhost", "root", "", "srs_db");
+    $filter_Result = mysqli_query($connect, $query);
+    return $filter_Result;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en" data-ng-app="myApp">
 <head>
@@ -20,43 +44,48 @@
         <?php
 			include("header.php");
 		?>
-        
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Sale Record</h1>
-                <div class="row">
-                    <div class="col-sm-1">
-                        <p><strong>Sale ID: </strong></p>
-                    </div>
-                    <div class="col-sm-11">
-                        <input type="text" name="sid" data-ng-model="#ID" />
-                    </div>
-                </div><br/>
-                <div class="row">
-                    <div class="col-sm-1">
-                        <p><strong>Date: </strong></p>
-                    </div>
-                    <div class="col-sm-11">
-                        <input type="date" name="date" data-ng-model="#date" />
-                    </div>
-                </div><br/>
-
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover">
+        <form action="record.php" method="post">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Sale Record</h1>
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <p><strong>Sale ID: </strong></p>
+                        </div>
+                        <div class="col-sm-11">
+                            <input type="text" name="saleToSearch" placeholder="Sale ID To Search" />
+                            <input type="submit" name="search" value="Filter" />
+                        </div>
+                    </div><br/>
+                    
+                    <table border="5" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#808080" width="100&#37">
                         <tr>
                             <th>Sale ID</th>
                             <th>Date</th>
-                            <th>Amount(RM)</th>
+                            <th>Amount</th>
                         </tr>
-                        <tr data-ng-repeat="s in sales | filter:sale">
-                            <td>{{#sid}}</td>
-                            <td>{{#date}}</td>
-                            <td>RM{{amount | number:2}}</td>
+
+                        <?php 
+                            while($row = mysqli_fetch_array($search_result)):
+                        ?>
+                        <tr>
+                            <td><?php 
+                                echo $row['sale_id'];
+                            ?></td>
+                            <td><?php 
+                                echo $row['sale_date'];
+                            ?></td>
+                            <td><?php 
+                                echo $row['amount'];
+                            ?></td>
                         </tr>
+                        <?php
+                            endwhile;
+                        ?>
                     </table>
                 </div>
-            </div>
-        </div> 
+            </div> 
+        </form>
     </div>
 	<script src="js/angular.min.js"></script>
 	<script src="js/angular-route.min.js"></script>
@@ -64,4 +93,5 @@
     <script src="js/script.js"></script>
 </body>
 </html>
+
 
