@@ -1,3 +1,27 @@
+<?php
+if(isset($_POST['search']))
+{
+    $stockToSearch = $_POST['stockToSearch'];
+    // search in all table columns
+    // using concat mysql function
+    $query = "SELECT * FROM `stock_item` WHERE CONCAT(`stock_code`, `stock_name`, `description`, `location`, `quantity`, `costing`, `selling`) LIKE '%".$stockToSearch."%'";
+    $search_result = filterTable($query);
+    
+}
+ else {
+    $query = "SELECT * FROM `stock_item`";
+    $search_result = filterTable($query);
+}
+
+// function to connect and execute the query
+function filterTable($query)
+{
+    $connect = mysqli_connect("localhost", "root", "", "srs_db");
+    $filter_Result = mysqli_query($connect, $query);
+    return $filter_Result;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en" data-ng-app="myApp">
 <head>
@@ -21,7 +45,7 @@
         <?php
 			include("header.php");
 		?>
-        
+<form action="inquiry.php" method="post">        
     <!-- div of inquiry -->
     <div>
         <h1>Stock Inquiry</h1>
@@ -29,7 +53,8 @@
         <!-- div of search input -->
 		<div class="row">
             <div class="col-sm-4">
-                <p>Med. Code <input type="text" data-ng-model="stockCode"></p>
+                <p>Med. Code <input type="text" name="stockToSearch" data-ng-model="stockCode"></p>
+                <p><input type="submit" name="search" value="Filter" /></p>
             </div>
 			<div class="col-sm-4">
                 <p>Med. Name <input type="text" data-ng-model="stockName"></p>
@@ -41,35 +66,52 @@
             <!-- the only column inside row -->
 			<div class="col-sm-12">
 				<div class="table-responsive">
-					<table class="table table-bordered table-striped table-hover table-condensed">
-						<thead id="tbhead">
+					<table border="5" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#808080" width="100&#37">
 							<tr>
-								<th id="s_code">Stock Code</th>
-								<th id="s_name">Stock Name</th>
-								<th id="desc">Description</th>
-								<th id="location">Location</th>
-								<th id="quantity">Quantity</th>
-								<th id="unit_price">Unit Price (RM)</th>
-								<th id="selling_price">Selling Price (RM)</th>
+								<th>Stock Code</th>
+								<th>Stock Name</th>
+								<th>Description</th>
+								<th>Location</th>
+								<th>Quantity</th>
+								<th>Unit Price (RM)</th>
+								<th>Selling Price (RM)</th>
 							</tr>
-						</thead>
-						<tbody id="tbbody">   <!--id&references names are placeholder for now--> 
-							<tr data-ng-repeat="x in list | filter : {stock_code:stockCode,stock_name:stockName}">
-								<td headers="s_code">{{stock_code}}</td>
-								<td headers="s_name">{{stock_name}}</td>
-								<td headers="desc">{{description}}</td>
-								<td headers="location">{{location}}</td>
-								<td headers="quantity">{{quantity}}</td>
-								<td headers="unit_price">{{unit_price}}</td>
-								<td headers="selling_price">{{selling_price}}</td>
+						<?php 
+                            while($row = mysqli_fetch_array($search_result)):
+                        ?>
+							<tr>
+								<td><?php 
+                                echo $row['stock_code'];
+                            ?></td>
+                            <td><?php 
+                                echo $row['stock_name'];
+                            ?></td>
+                            <td><?php 
+                                echo $row['description'];
+                            ?></td>
+                                <td><?php 
+                                echo $row['location'];
+                            ?></td>
+                            <td><?php 
+                                echo $row['quantity'];
+                            ?></td>
+                            <td><?php 
+                                echo $row['costing'];
+                            ?></td>
+                                <td><?php 
+                                echo $row['selling'];
+                            ?></td>
 							</tr>
-						</tbody>
+                        <?php
+                            endwhile;
+                        ?>
 					</table>
 				</div>
 			</div> <!-- end of the only column inside table row -->
 		</div> <!-- end of whole table row -->
 		
     </div> <!-- end of inquiry div -->
+  </form> 
     </div> <!-- end of container div -->
     
 	        <!-- jQuery – required for Bootstrap plugins) --> 
@@ -83,4 +125,3 @@
             <script src="js/script.js"></script>
 </body>
 </html>
-
