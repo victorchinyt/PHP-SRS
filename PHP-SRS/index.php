@@ -44,7 +44,6 @@
                 echo "<p>Unable to create table. Error Code ". mysql_errno().":".mysql_error()."</p>";
             }
         }else echo "<p>Sorry, table '$tableName2' already exist!<p>";
-    
 ?>
 
 <!DOCTYPE html>
@@ -272,9 +271,9 @@
         
         $sqlResult = @mysql_query($sql_update, $dbConnection);
         if ($sqlResult === TRUE) {
-            echo "Stock update successfully";
+            echo "<br/>Stock update successfully";
         } else {
-            echo "<p>Unable to update data. Error Code ". mysql_errno($sql_update).":". mysql_error($sql_update)."</p>";
+            echo "<p>Unable to update data.</p>";
         }
     }
 ?>  

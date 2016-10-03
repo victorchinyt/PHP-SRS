@@ -6,9 +6,26 @@ if(isset($_POST['search']))
     // using concat mysql function
     $query = "SELECT * FROM `sales_record` WHERE CONCAT(`sale_id`, `sale_date`, `amount`) LIKE '%".$saleToSearch."%'";
     $search_result = filterTable($query);
-    
 }
  else {
+    $query = "SELECT * FROM `sales_record`";
+    $search_result = filterTable($query);
+}
+
+if(isset($_POST['delete']))
+{
+    // sql to delete a record
+    $del = $_POST['toDelete'];
+    
+    $sql_del = "DELETE FROM sales_record WHERE sale_id=$del";
+    
+    $connect = mysqli_connect("localhost", "root", "", "srs_db");
+    $sqlResult = mysqli_query($connect, $sql_del);
+    if ($sqlResult === TRUE) {
+        echo "Record deleted successfully";
+    } else {
+        echo "<p>Error deleting record.</p>";
+    }
     $query = "SELECT * FROM `sales_record`";
     $search_result = filterTable($query);
 }
@@ -22,6 +39,7 @@ function filterTable($query)
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en" data-ng-app="myApp">
 <head>
@@ -39,7 +57,7 @@ function filterTable($query)
     <link href="css/style.css" rel="stylesheet" />
 </head>
 <body data-ng-controller = "postCtrl">
-    <div class="container">
+    <div class="container" >
         
         <?php
 			include("header.php");
@@ -52,13 +70,17 @@ function filterTable($query)
                         <div class="col-sm-1">
                             <p><strong>Sale ID: </strong></p>
                         </div>
-                        <div class="col-sm-11">
-                            <input type="text" name="saleToSearch" placeholder="Sale ID To Search" />
+                        <div class="col-sm-6">
+                            <input type="text" name="saleToSearch" placeholder="Sale ID to Search" />
                             <input type="submit" name="search" value="Filter" />
+                        </div>
+                        <div class="col-sm-5" >
+                            <input type="text" name="toDelete" placeholder="Sale ID to Delete" />
+                            <input type="submit" name="delete" value="Delete" />
                         </div>
                     </div><br/>
                     
-                    <table border="5" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#808080" width="100&#37">
+                    <table class="table table-striped table-hover" border="5" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#808080" width="100&#37">
                         <tr>
                             <th>Sale ID</th>
                             <th>Date</th>
@@ -87,10 +109,11 @@ function filterTable($query)
             </div> 
         </form>
     </div>
+    
 	<script src="js/angular.min.js"></script>
 	<script src="js/angular-route.min.js"></script>
-	<script src="js/appmenu.js"></script>
     <script src="js/script.js"></script>
+    
 </body>
 </html>
 
