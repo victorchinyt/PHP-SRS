@@ -13,6 +13,24 @@ if(isset($_POST['search']))
     $search_result = filterTable($query);
 }
 
+if(isset($_POST['delete']))
+{
+    // sql to delete a record
+    $del = $_POST['toDelete'];
+    
+    $sql_del = "DELETE FROM stock_item WHERE stock_code=$del";
+    
+    $connect = mysqli_connect("localhost", "root", "", "srs_db");
+    $sqlResult = mysqli_query($connect, $sql_del);
+    if ($sqlResult === TRUE) {
+        echo "Stock deleted successfully";
+    } else {
+        echo "<p>Error deleting stock.</p>";
+    }
+    $query = "SELECT * FROM `stock_item`";
+    $search_result = filterTable($query);
+}
+
 // function to connect and execute the query
 function filterTable($query)
 {
@@ -45,19 +63,23 @@ function filterTable($query)
         <?php
 			include("header.php");
 		?>
-<form action="inquiry.php" method="post">        
+    <form action="inquiry.php" method="post">        
     <!-- div of inquiry -->
     <div>
         <h1>Stock Inquiry</h1>
         
         <!-- div of search input -->
 		<div class="row">
-            <div class="col-sm-4">
-                <p>Med. Code <input type="text" name="stockToSearch" data-ng-model="stockCode"></p>
+            <div class="col-sm-6">
+                <p>Med. Code <input type="text" name="stockToSearch" placeholder="Search"></p>
                 <p><input type="submit" name="search" value="Filter" /></p>
             </div>
+			<div class="col-sm-6">
+                <p>Med. Code <input type="text" name="toDelete" placeholder="Delete"></p>
+                <p><input type="submit" name="delete" value="Delete" /></p>
+            </div>
 			<div class="col-sm-4">
-                <p>Med. Name <input type="text" data-ng-model="stockName"></p>
+                <!-- filter supposedly here -->
             </div>
         </div> <!-- end of search input div -->
 		
@@ -111,7 +133,7 @@ function filterTable($query)
 		</div> <!-- end of whole table row -->
 		
     </div> <!-- end of inquiry div -->
-  </form> 
+    </form> 
     </div> <!-- end of container div -->
     
 	        <!-- jQuery – required for Bootstrap plugins) --> 

@@ -189,18 +189,13 @@
                         </div>
                     </div><br/>
                     <div class="row">
-                        <div class="col-sm-12">  
-                            <input class="btn" type="reset" name="BDelete" value="Delete"> 
+                        <div class="col-sm-12">
+                            <a href="inquiry.php"><input class="btn" type="button" value="Delete"></a>
                         </div>
                     </div><br/>
                     <div class="row">
                         <div class="col-sm-12">
-                            <input class="btn" type="reset" name="BNew" value="New"> 
-                        </div>
-                    </div><br/>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <input class="btn" type="reset" name="BSearch" value="Search"> 
+                            <a href="inquiry.php"><input class="btn" type="button" value="Search"></a>
                         </div>
                     </div>
                 </div>

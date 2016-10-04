@@ -75,7 +75,7 @@
         <form action="index.php" method="post">
             <div class="row">
                 <div class="col-sm-6">
-                    <p>Sales ID: <input type="text" name="sid" id="sid" /></p>
+                    <p>Sales ID: <input type="text" name="sid" id="sid" required="true"/></p>
                 </div>
                 <div class="col-sm-6">
                     <p>Date: <input type="date" name="date" id="date" /></p>
@@ -196,7 +196,7 @@
                 <div class="col-sm-2">
                     <div class="row">
                         <div class="col-sm-12">
-                            <input class="btn" type="button" value="Add">
+                            <input class="btn" type="submit" name="BSubmit" value="Submit">
                         </div>
                     </div><br />
                     <div class="row">
@@ -206,17 +206,17 @@
                     </div><br />
                     <div class="row">
                         <div class="col-sm-12">
-                            <input class="btn" type="submit" name="BSubmit" value="Submit">
-                        </div>
-                    </div><br />
-                    <div class="row">
-                        <div class="col-sm-12">
                             <input class="btn" type="button" value="Print"> 
                         </div>
                     </div><br />
                     <div class="row">
                         <div class="col-sm-12">
-                            <a href="#stockinquiry"><input class="btn" type="button" value="Search"></a> 
+                            <a href="record.php"><input class="btn" type="button" value="Delete"></a> 
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <a href="record.php"><input class="btn" type="button" value="Search"></a>
                         </div>
                     </div>            
                 </div>
@@ -273,7 +273,7 @@
         if ($sqlResult === TRUE) {
             echo "<br/>Stock update successfully";
         } else {
-            echo "<p>Unable to update data.</p>";
+            echo "<p>Unable to update stock.</p>";
         }
     }
 ?>  
