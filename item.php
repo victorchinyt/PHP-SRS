@@ -67,7 +67,7 @@
 	 <![endif]-->
     <link href="css/style.css" rel="stylesheet" />
 </head>
-<body data-ng-controller="myCtrl">
+<body>
     <div class="container">
         <!-- div of navbar -->
         
