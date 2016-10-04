@@ -12,6 +12,18 @@ if(isset($_POST['search']))
     $search_result = filterTable($query);
 }
 
+if(isset($_POST['searchByDate']))
+{
+    $date1 = $_POST['toCal1'];
+    $date2 = $_POST['toCal2'];
+    $query = "SELECT * FROM `sales_record` WHERE `sale_date` BETWEEN '$date1' AND '$date2'";
+    $search_result = filterTable($query);
+}
+ else {
+    $query = "SELECT * FROM `sales_record`";
+    $search_result = filterTable($query);
+}
+
 if(isset($_POST['delete']))
 {
     // sql to delete a record
@@ -56,7 +68,7 @@ function filterTable($query)
 	 <![endif]-->
     <link href="css/style.css" rel="stylesheet" />
 </head>
-<body data-ng-controller = "postCtrl">
+<body>
     <div class="container" >
         
         <?php
@@ -87,7 +99,8 @@ function filterTable($query)
                             <th>Amount</th>
                         </tr>
 
-                        <?php 
+                        <?php
+                            $sum = 0; $days=0;
                             while($row = mysqli_fetch_array($search_result)):
                         ?>
                         <tr>
@@ -99,20 +112,76 @@ function filterTable($query)
                             ?></td>
                             <td><?php 
                                 echo $row['amount'];
+                                $sum += $row['amount'];
+                                $days += 1;
                             ?></td>
                         </tr>
                         <?php
                             endwhile;
                         ?>
                     </table>
+                    
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <p><strong>Search by Date:</strong></p>
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="date" name="toCal1" value="<?php echo date('Y-m-d'); ?>"/>
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="date" name="toCal2" value="<?php echo date('Y-m-d'); ?>"/>
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="submit" name="searchByDate" value="Search"/>
+                        </div>
+                    </div>
+                    <br/><br/>
+                    
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p><strong>Calculate Total Sales:</strong></p>
+                        </div>
+                        <!-- calculate average
+                        <div class="col-sm-4">
+                            #comment out - not per day but per entry based on the code
+                            <p><strong>Calculate Average Amount per Day:</strong></p>
+                        </div> -->
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div ng-show="showme1">
+                                <p>RM <?php echo $sum;?></p>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="button" value="Calculate" ng-click="showme1 = 1"/>
+                            </div>
+                        </div>
+                        
+                        <!-- calculate average
+                        <div class="col-sm-4">
+                            <div ng-show="showme2">
+                                <p>RM {{<?php echo $sum;?>/<?php echo $days;?>}}/day</p>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="button" value="Calculate" ng-click="showme2 = 1"/>
+                            </div>
+                        </div> -->
+                    </div>
                 </div>
             </div> 
         </form>
     </div>
     
-	<script src="js/angular.min.js"></script>
-	<script src="js/angular-route.min.js"></script>
-    <script src="js/script.js"></script>
+	        <!-- jQuery – required for Bootstrap plugins) --> 
+            <script src="js/jquery.min.js"></script> 
+            <!-- All Bootstrap  plug-ins  file --> 
+            <script src="js/bootstrap.min.js"></script> 
+            <!-- Basic AngularJS --> 
+            <script src="js/angular.min.js"></script> 
+            <script src="js/angular-route.min.js"></script>
+            <!-- Your Controller --> 
+            <script src="js/script.js"></script>
     
 </body>
 </html>
