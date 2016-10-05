@@ -153,7 +153,7 @@ function filterTable($query)
                             <div ng-show="showme1">
                                 <p>RM <?php echo $sum;?></p>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-4" ng-hide="showme1">
                                 <input type="button" value="Calculate" ng-click="showme1 = 1"/>
                             </div>
                         </div>
@@ -163,7 +163,7 @@ function filterTable($query)
                             <div ng-show="showme2">
                                 <p>RM {{<?php echo $sum;?>/<?php echo $days;?>}}/day</p>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-4" ng-hide="showme2">
                                 <input type="button" value="Calculate" ng-click="showme2 = 1"/>
                             </div>
                         </div> -->

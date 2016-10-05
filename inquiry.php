@@ -41,7 +41,7 @@ function filterTable($query)
 
 ?>
 <!DOCTYPE html>
-<html lang="en" data-ng-app="myApp">
+<html lang="en" data-ng-app='myApp'>
 <head>
 	 <title>SRS System : Stock Inquiry</title>
 	 <meta charset="utf-8" />
@@ -88,7 +88,7 @@ function filterTable($query)
             <!-- the only column inside row -->
 			<div class="col-sm-12">
 				<div class="table-responsive">
-					<table border="5" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#808080" width="100&#37">
+					<table class="table table-striped table-hover" border="5" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#808080" width="100&#37">
 							<tr>
 								<th>Stock Code</th>
 								<th>Stock Name</th>
@@ -98,7 +98,8 @@ function filterTable($query)
 								<th>Unit Price (RM)</th>
 								<th>Selling Price (RM)</th>
 							</tr>
-						<?php 
+						<?php
+                            $qty = 0;
                             while($row = mysqli_fetch_array($search_result)):
                         ?>
 							<tr>
@@ -116,7 +117,9 @@ function filterTable($query)
                             ?></td>
                             <td><?php 
                                 echo $row['quantity'];
-                            ?></td>
+                                if (($row['quantity']) > 5 ?: $qty += 2)
+                                ?>
+                                </td>
                             <td><?php 
                                 echo $row['costing'];
                             ?></td>
@@ -130,12 +133,14 @@ function filterTable($query)
 					</table>
 				</div>
 			</div> <!-- end of the only column inside table row -->
-		</div> <!-- end of whole table row -->
-		
+		</div> <!-- end of whole table row -->			
     </div> <!-- end of inquiry div -->
     </form> 
     </div> <!-- end of container div -->
-    
+    <?php
+        if($qty != 0)
+        echo '<script> alert("Some medicines are running out. (5 or lower)\nPlease restock !"); </script>';
+    ?>
 	        <!-- jQuery – required for Bootstrap plugins) --> 
             <script src="js/jquery.min.js"></script> 
             <!-- All Bootstrap  plug-ins  file --> 
