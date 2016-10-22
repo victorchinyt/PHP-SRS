@@ -36,6 +36,8 @@
             $strSql2 = "CREATE TABLE $tableName2 (
                             sale_id VARCHAR(255) NOT NULL,
                             sale_date DATE NOT NULL,
+                            stock_code int(8) NOT NULL,
+                            stock_name varchar(255) NOT NULL,
                             amount DECIMAL(10,2) NOT NULL)";
             $queryResult2 = @mysql_query($strSql2, $dbConnection);
             if($queryResult2){
@@ -88,6 +90,7 @@
                             <thead>
                                 <tr>
                                     <th>Stock Code</th>
+                                    <th>Stock Name</th>
                                     <th>Quantity</th>
                                     <th>Unit Price (RM)</th>
                                     <th>Discount (%)</th>
@@ -98,6 +101,9 @@
                                 <tr>
                                     <td>
                                         <input type="text" name="input" id="scode">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="input" id="sname">
                                     </td>
                                     <td>
                                         <input type="number" name="sq" id="quantity" data-ng-model="num1" />
@@ -119,6 +125,9 @@
                                         <input type="text" name="input2" id="scode">
                                     </td>
                                     <td>
+                                        <input type="text" name="input" id="sname">
+                                    </td>
+                                    <td>
                                         <input type="number" name="sq2" id="quantity" data-ng-model="num4" />
                                     </td>
                                     <td>
@@ -136,6 +145,9 @@
                                 <tr>
                                     <td>
                                         <input type="text" name="input3" id="scode">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="input" id="sname">
                                     </td>
                                     <td>
                                         <input type="number" name="sq3" id="quantity" data-ng-model="num7" />
@@ -157,6 +169,9 @@
                                         <input type="text" name="input4" id="scode">
                                     </td>
                                     <td>
+                                        <input type="text" name="input" id="sname">
+                                    </td>
+                                    <td>
                                         <input type="number" name="sq4" id="quantity" data-ng-model="num10" />
                                     </td>
                                     <td>
@@ -174,6 +189,9 @@
                                 <tr>
                                     <td>
                                         <input type="text" name="input5" id="scode">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="input" id="sname">
                                     </td>
                                     <td>
                                         <input type="number" name="sq5" id="quantity" data-ng-model="num13" />
@@ -251,13 +269,15 @@
 	{
 		$Sid = $_POST['sid'];
 		$Sdate = $_POST['date'];
+        $Scode = $_POST['scode'];
+        $Sname = $_POST['sname'];
 		$Samount = $_POST['amount'];
         $Squantity = $_POST['sq']; // first row
         $Scode = $_POST['input']; // first rows
 	
         //insert the data into stock_item table
-        $sql = "INSERT INTO sales_record (sale_id, sale_date, amount)
-        VALUES ('$Sid', '$Sdate', '$Samount')";
+        $sql = "INSERT INTO sales_record (sale_id, sale_date, stock_code, stock_name, amount)
+        VALUES ('$Sid', '$Sdate', '$Scode', '$Sname', '$Samount')";
         
         // only edit for first row
         $sql_update = "UPDATE stock_item SET quantity=(quantity-$Squantity) WHERE stock_code=$Scode";
