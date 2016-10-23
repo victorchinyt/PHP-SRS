@@ -9,14 +9,14 @@
 		if($dbConnection === FALSE){
 			echo "<p>Unable to connect to the database server.<br /> Error Code ". mysql_errno().":". mysql_error()."</p>";
 		}else {
-		echo "<p>Successfully connect to the database server.</p>";
+		
 	}
 
     //Create Database
         $strSql = "CREATE DATABASE $dbName";
         $queryResult = @mysql_query($strSql, $dbConnection);
         if($queryResult === FALSE){
-            echo "<p>Unable to create the database.</p>" . "<p>Error code " . mysql_errno($dbConnection) . ": " . mysql_error($dbConnection) . "</p>";
+            
         }else{
             echo "<p>Database \”$dbName\” successfully created</p>";
         }
@@ -36,15 +36,50 @@
             $strSql2 = "CREATE TABLE $tableName2 (
                             sale_id VARCHAR(255) NOT NULL,
                             sale_date DATE NOT NULL,
+                            stock_code int(8) NOT NULL,
+                            stock_name varchar(255) NOT NULL,
                             amount DECIMAL(10,2) NOT NULL)";
             $queryResult2 = @mysql_query($strSql2, $dbConnection);
             if($queryResult2){
                 echo "<p>Table: '$tableName2' has been succesfully created.</p>";
             }else{
-                echo "<p>Unable to create table. Error Code ". mysql_errno().":".mysql_error()."</p>";
+                
             }
-        }else echo "<p>Sorry, table '$tableName2' already exist!<p>";
+        }else 
 ?>
+<?php
+	if(isset($_POST['BSubmit']))	
+	{
+		$Sid = $_POST['sid'];
+		$Sdate = $_POST['date'];
+        $Scode = $_POST['scode'];
+        $Sname = $_POST['sname'];
+		$Samount = $_POST['amount'];
+        $Squantity = $_POST['sq']; // first row
+        $Scode = $_POST['scode']; // first rows
+	
+        //insert the data into stock_item table
+        $sql = "INSERT INTO sales_record (sale_id, sale_date, stock_code, stock_name, amount)
+        VALUES ('$Sid', '$Sdate', '$Scode', '$Sname', '$Samount')";
+        
+        // only edit for first row
+        $sql_update = "UPDATE stock_item SET quantity=(quantity-$Squantity) WHERE stock_code=$Scode";
+
+        $sqlResult = @mysql_query($sql, $dbConnection);
+        if ($sqlResult === TRUE) {
+            echo "New sale insert successfully";
+        } else {
+            echo "<p>Unable to insert data. Error Code ". mysql_errno($dbConnection).":". mysql_error($dbConnection)."</p>";
+        }
+        
+        $sqlResult = @mysql_query($sql_update, $dbConnection);
+        if ($sqlResult === TRUE) {
+            echo "<br/>Stock update successfully";
+        } else {
+            echo "<p>Unable to update stock.</p>";
+        }
+    }
+?>  
 
 <!DOCTYPE html>
 <html lang="en" data-ng-app="myApp">
@@ -78,7 +113,7 @@
                     <p>Sales ID: <input type="text" name="sid" id="sid" required="true"/></p>
                 </div>
                 <div class="col-sm-6">
-                    <p>Date: <input type="date" name="date" id="date" /></p>
+                    <p>Date: <input type="date" name="date" id="date" value="<?php echo date('Y-m-d'); ?>" /></p>
                 </div>
             </div>
             <div class="row">
@@ -88,6 +123,7 @@
                             <thead>
                                 <tr>
                                     <th>Stock Code</th>
+                                    <th>Stock Name</th>
                                     <th>Quantity</th>
                                     <th>Unit Price (RM)</th>
                                     <th>Discount (%)</th>
@@ -97,7 +133,10 @@
                             <tbody>    
                                 <tr>
                                     <td>
-                                        <input type="text" name="input" id="scode">
+                                        <input type="text" name="scode" id="scode">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="sname" id="sname">
                                     </td>
                                     <td>
                                         <input type="number" name="sq" id="quantity" data-ng-model="num1" />
@@ -116,7 +155,10 @@
                             <tbody>    
                                 <tr>
                                     <td>
-                                        <input type="text" name="input2" id="scode">
+                                        <input type="text" name="scode2" id="scode">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="sname2" id="sname">
                                     </td>
                                     <td>
                                         <input type="number" name="sq2" id="quantity" data-ng-model="num4" />
@@ -135,7 +177,10 @@
                             <tbody>    
                                 <tr>
                                     <td>
-                                        <input type="text" name="input3" id="scode">
+                                        <input type="text" name="scode3" id="scode">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="sname3" id="sname">
                                     </td>
                                     <td>
                                         <input type="number" name="sq3" id="quantity" data-ng-model="num7" />
@@ -154,7 +199,10 @@
                             <tbody>    
                                 <tr>
                                     <td>
-                                        <input type="text" name="input4" id="scode">
+                                        <input type="text" name="scode4" id="scode">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="sname4" id="sname">
                                     </td>
                                     <td>
                                         <input type="number" name="sq4" id="quantity" data-ng-model="num10" />
@@ -173,7 +221,10 @@
                             <tbody>    
                                 <tr>
                                     <td>
-                                        <input type="text" name="input5" id="scode">
+                                        <input type="text" name="scode5" id="scode">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="sname6" id="sname">
                                     </td>
                                     <td>
                                         <input type="number" name="sq5" id="quantity" data-ng-model="num13" />
@@ -245,37 +296,5 @@
             <script src="js/angular-route.min.js"></script>
             <!-- Your Controller --> 
             <script src="js/script.js"></script>
-    
-<?php
-	if(isset($_POST['BSubmit']))	
-	{
-		$Sid = $_POST['sid'];
-		$Sdate = $_POST['date'];
-		$Samount = $_POST['amount'];
-        $Squantity = $_POST['sq']; // first row
-        $Scode = $_POST['input']; // first rows
-	
-        //insert the data into stock_item table
-        $sql = "INSERT INTO sales_record (sale_id, sale_date, amount)
-        VALUES ('$Sid', '$Sdate', '$Samount')";
-        
-        // only edit for first row
-        $sql_update = "UPDATE stock_item SET quantity=(quantity-$Squantity) WHERE stock_code=$Scode";
-
-        $sqlResult = @mysql_query($sql, $dbConnection);
-        if ($sqlResult === TRUE) {
-            echo "New sale insert successfully";
-        } else {
-            echo "<p>Unable to insert data. Error Code ". mysql_errno($dbConnection).":". mysql_error($dbConnection)."</p>";
-        }
-        
-        $sqlResult = @mysql_query($sql_update, $dbConnection);
-        if ($sqlResult === TRUE) {
-            echo "<br/>Stock update successfully";
-        } else {
-            echo "<p>Unable to update stock.</p>";
-        }
-    }
-?>  
 </body>
 </html>

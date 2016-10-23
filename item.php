@@ -9,14 +9,14 @@
 		if($dbConnection === FALSE){
 			echo "<p>Unable to connect to the database server.<br /> Error Code ". mysql_errno().":". mysql_error()."</p>";
 		}else {
-		echo "<p>Successfully connect to the database server.</p>";
+		
 	}
 
     //Create Database
         $strSql = "CREATE DATABASE $dbName";
         $queryResult = @mysql_query($strSql, $dbConnection);
         if($queryResult === FALSE){
-            echo "<p>Unable to create the database.</p>" . "<p>Error code " . mysql_errno($dbConnection) . ": " . mysql_error($dbConnection) . "</p>";
+            
         }else{
             echo "<p>Database \”$dbName\” successfully created</p>";
         }
@@ -44,10 +44,33 @@
             if($queryResult1){
                 echo "<p>Table: '$tableName1' has been succesfully created.</p>";
             }else{
-                echo "<p>Unable to create table. Error Code ". mysql_errno().":".mysql_error()."</p>";
+                
             }
-        }else echo "<p>Sorry, table '$tableName1' already exist!<p>";
+        }else
 ?>
+<?php
+	if(isset($_POST['BSubmit']))	
+	{
+		$Scode= $_POST['stockcode']; 
+		$Sname= $_POST['stockname']; 
+		$Desc= $_POST['description'];
+        $Location= $_POST['location']; 
+		$Mbal= $_POST['mbal']; 
+		$Mcost= $_POST['mcost'];
+        $Mprice= $_POST['mprice'];
+	
+        //insert the data into stock_item table
+        $sql = "INSERT INTO stock_item (stock_code, stock_name, description, location, quantity, costing, selling)
+        VALUES ('$Scode', '$Sname', '$Desc', '$Location', '$Mbal', '$Mcost','$Mprice')";
+
+        $sqlResult = @mysql_query($sql, $dbConnection);
+        if ($sqlResult === TRUE) {
+            echo "New stock insert successfully";
+        } else {
+            echo "<p>Unable to insert data. Error Code ". mysql_errno($dbConnection).":". mysql_error($dbConnection)."</p>";
+        }
+	}
+?>  
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -216,29 +239,5 @@
             <script src="js/angular-route.min.js"></script>
             <!-- Your Controller --> 
             <script src="js/script.js"></script>
-    
-<?php
-	if(isset($_POST['BSubmit']))	
-	{
-		$Scode= $_POST['stockcode']; 
-		$Sname= $_POST['stockname']; 
-		$Desc= $_POST['description'];
-        $Location= $_POST['location']; 
-		$Mbal= $_POST['mbal']; 
-		$Mcost= $_POST['mcost'];
-        $Mprice= $_POST['mprice'];
-	
-        //insert the data into stock_item table
-        $sql = "INSERT INTO stock_item (stock_code, stock_name, description, location, quantity, costing, selling)
-        VALUES ('$Scode', '$Sname', '$Desc', '$Location', '$Mbal', '$Mcost','$Mprice')";
-
-        $sqlResult = @mysql_query($sql, $dbConnection);
-        if ($sqlResult === TRUE) {
-            echo "New stock insert successfully";
-        } else {
-            echo "<p>Unable to insert data. Error Code ". mysql_errno($dbConnection).":". mysql_error($dbConnection)."</p>";
-        }
-	}
-?>  
 </body>
 </html>

@@ -4,7 +4,7 @@ if(isset($_POST['search']))
     $saleToSearch = $_POST['saleToSearch'];
     // search in all table columns
     // using concat mysql function
-    $query = "SELECT * FROM `sales_record` WHERE CONCAT(`sale_id`, `sale_date`, `amount`) LIKE '%".$saleToSearch."%'";
+    $query = "SELECT * FROM `sales_record` WHERE CONCAT(`sale_id`, `sale_date`, `stock_code`, `stock_name`, `amount`) LIKE '%".$saleToSearch."%'";
     $search_result = filterTable($query);
 }
  else {
@@ -96,6 +96,8 @@ function filterTable($query)
                         <tr>
                             <th>Sale ID</th>
                             <th>Date</th>
+                            <th>Stock Code</th>
+                            <th>Stock Name</th>
                             <th>Amount</th>
                         </tr>
 
@@ -109,6 +111,12 @@ function filterTable($query)
                             ?></td>
                             <td><?php 
                                 echo $row['sale_date'];
+                            ?></td>
+                            <td><?php 
+                                echo $row['stock_code'];
+                            ?></td>
+                            <td><?php 
+                                echo $row['stock_name'];
                             ?></td>
                             <td><?php 
                                 echo $row['amount'];
