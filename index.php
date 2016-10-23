@@ -139,6 +139,9 @@
                                         <input type="text" name="sname" id="sname">
                                     </td>
                                     <td>
+                                        <input type="text" name="input" id="sname">
+                                    </td>
+                                    <td>
                                         <input type="number" name="sq" id="quantity" data-ng-model="num1" />
                                     </td>
                                     <td>
@@ -159,6 +162,9 @@
                                     </td>
                                     <td>
                                         <input type="text" name="sname2" id="sname">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="input" id="sname">
                                     </td>
                                     <td>
                                         <input type="number" name="sq2" id="quantity" data-ng-model="num4" />
@@ -183,6 +189,9 @@
                                         <input type="text" name="sname3" id="sname">
                                     </td>
                                     <td>
+                                        <input type="text" name="input" id="sname">
+                                    </td>
+                                    <td>
                                         <input type="number" name="sq3" id="quantity" data-ng-model="num7" />
                                     </td>
                                     <td>
@@ -205,6 +214,9 @@
                                         <input type="text" name="sname4" id="sname">
                                     </td>
                                     <td>
+                                        <input type="text" name="input" id="sname">
+                                    </td>
+                                    <td>
                                         <input type="number" name="sq4" id="quantity" data-ng-model="num10" />
                                     </td>
                                     <td>
@@ -225,6 +237,9 @@
                                     </td>
                                     <td>
                                         <input type="text" name="sname6" id="sname">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="input" id="sname">
                                     </td>
                                     <td>
                                         <input type="number" name="sq5" id="quantity" data-ng-model="num13" />
@@ -296,5 +311,42 @@
             <script src="js/angular-route.min.js"></script>
             <!-- Your Controller --> 
             <script src="js/script.js"></script>
+<<<<<<< HEAD
+=======
+    
+<?php
+	if(isset($_POST['BSubmit']))	
+	{
+		$Sid = $_POST['sid'];
+		$Sdate = $_POST['date'];
+        $Scode = $_POST['scode'];
+        $Sname = $_POST['sname'];
+		$Samount = $_POST['amount'];
+        $Squantity = $_POST['sq']; // first row
+        $Scode = $_POST['input']; // first rows
+	
+        //insert the data into stock_item table
+        $sql = "INSERT INTO sales_record (sale_id, sale_date, stock_code, stock_name, amount)
+        VALUES ('$Sid', '$Sdate', '$Scode', '$Sname', '$Samount')";
+        
+        // only edit for first row
+        $sql_update = "UPDATE stock_item SET quantity=(quantity-$Squantity) WHERE stock_code=$Scode";
+
+        $sqlResult = @mysql_query($sql, $dbConnection);
+        if ($sqlResult === TRUE) {
+            echo "New sale insert successfully";
+        } else {
+            echo "<p>Unable to insert data. Error Code ". mysql_errno($dbConnection).":". mysql_error($dbConnection)."</p>";
+        }
+        
+        $sqlResult = @mysql_query($sql_update, $dbConnection);
+        if ($sqlResult === TRUE) {
+            echo "<br/>Stock update successfully";
+        } else {
+            echo "<p>Unable to update stock.</p>";
+        }
+    }
+?>  
+>>>>>>> 6e346d714eeeb02031d2cdbdbc5fa1c2dfa770c3
 </body>
 </html>
