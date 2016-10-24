@@ -57,6 +57,9 @@ function filterTable($query)
     <link href="css/style.css" rel="stylesheet" />
 </head>
 <body>
+    <header>
+        <h1 id="shopname">People Health Pharmacy</h1>
+    </header>
     <div class="container">
     <!-- div of navbar -->
 	

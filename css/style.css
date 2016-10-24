@@ -9,7 +9,6 @@ div{
 }
 
 #tamount{
-    color:black;
     font-weight: bold;
     font-size: 20px;
 }
@@ -26,4 +25,31 @@ label{
 
 input{
     width: 130px;
+}
+
+body{
+    background-image: url("../image/background.jpg");
+    background-repeat: no-repeat;
+    color:dodgerblue;
+}
+
+header{
+	border: 1px inset black;
+	margin: 0.5em;
+	padding: 0.5em;
+	text-align:center;
+	background:url("../image/header.jpg");
+	background-repeat: no-repeat;
+    height: 100px;
+    background-size: 100% 100%;
+}
+
+#shopname{
+    text-align: center;
+    color: cyan;
+    font-family:cursive;
+}
+
+.btn:hover{
+    color:red;
 }
