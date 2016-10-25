@@ -82,18 +82,58 @@
             $Mbal= $_POST['mbal']; 
             $Mcost= $_POST['mcost'];
             $Mprice= $_POST['mprice'];
-
-            //insert the data into stock_item table
-            $sql = "INSERT INTO stock_item (stock_code, stock_name, description, location, quantity, costing, selling)
-            VALUES ('$Scode', '$Sname', '$Desc', '$Location', '$Mbal', '$Mcost','$Mprice')";
-
-            $sqlResult = @mysql_query($sql, $dbConnection);
-            if ($sqlResult === TRUE) {
-                echo "New stock insert successfully";
-            } else {
-                echo "<p>Unable to insert data. Error Code ". mysql_errno($dbConnection).":". mysql_error($dbConnection)."</p>";
-            }
+            
+        validate_name($Scode, $Sname, $Desc, $Location, $Mbal, $Mcost, $Mprice);
+		echo"<br><br>";
         }
+
+        //validate the data
+        function validate_name($Scode, $Sname, $Desc, $Location, $Mbal, $Mcost, $Mprice){
+            if (empty($Scode)){
+			
+            echo "<p>Please enter the Medicine Code!</p>";
+
+            }else if (empty($Sname)){
+
+            echo "<p>Please enter the Medicine Name!</p>";
+
+            }else if (empty($Desc)){
+
+            echo "<p>Please enter the Medicine Description!</p>";	
+
+            }else if (empty($Location)){
+
+            echo "<p>Please enter the Medicine Location!</p>";
+
+            }else if (empty($Mbal)){
+
+            echo "<p>Please enter the Medicine Quantity!</p>";
+
+            }else if (empty($Mcost)){
+
+            echo "<p>Please enter the Medicine Cost Price!</p>";
+
+            }else if (empty($Mprice)){
+
+            echo "<p>Please enter the Medicine Selling Price!</p>";
+
+            }else{ 
+
+
+
+              //insert the data into stock_item table
+                $sql = "INSERT INTO stock_item (stock_code, stock_name, description, location, quantity, costing, selling)
+                VALUES ('$Scode', '$Sname', '$Desc', '$Location', '$Mbal', '$Mcost','$Mprice')";
+
+                $sqlResult = @mysql_query($sql, $dbConnection);
+                if ($sqlResult === TRUE) {
+                    echo "New stock insert successfully";
+                } else {
+                    echo "<p>Unable to insert data. Error Code ". mysql_errno($dbConnection).":". mysql_error($dbConnection)."</p>";
+                }
+            }
+	}
+
     ?> 
     <div class="container">
         <!-- div of navbar -->

@@ -78,6 +78,26 @@
             $Samount = $_POST['amount'];
             $Squantity = $_POST['sq']; // first row
             $Scode = $_POST['scode']; // first rows
+            
+            validate_name($Sid, $Sdate, $Scode);
+            echo"<br><br>";
+        }
+
+        //validate the data
+        function validate_name($Sid, $Sdate, $Scode){
+            if (empty($Sid)){
+			
+            echo "<p>Please enter the Sales ID!</p>";
+
+            }else if (empty($Sdate)){
+
+            echo "<p>Please enter the Stock Code!</p>";
+
+            }else if (empty($Scode)){
+
+            echo "<p>Please enter the Stock Name!</p>";	
+
+            }else{ 
 
             //insert the data into stock_item table
             $sql = "INSERT INTO sales_record (sale_id, sale_date, stock_code, stock_name, amount)
@@ -100,6 +120,9 @@
                 echo "<p>Unable to update stock.</p>";
             }
         }
+}
+            
+        
     ?> 
     <div class="container">
         <?php
