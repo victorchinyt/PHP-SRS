@@ -10,6 +10,8 @@ if(isset($_POST['search']))
  else {
     $query = "SELECT * FROM `sales_record`";
     $search_result = filterTable($query);
+    $medicinequery = "SELECT stock_code, stock_name, SUM(quantity) AS med_quantity FROM sales_record GROUP BY stock_code";
+    $medicine_sales = filterTable($medicinequery);
 }
 
 if(isset($_POST['searchByDate']))
@@ -73,12 +75,13 @@ function filterTable($query)
         <h1 id="shopname">People Health Pharmacy</h1>
     </header>
     <div class="container" >
-        
         <?php
 			include("header.php");
 		?>
         <form action="record.php" method="post">
+            <!-- div of row inside form -->
             <div class="row">
+                <!-- div of col inside form -->
                 <div class="col-md-12">
                     <h1>Sale Record</h1>
                     <div class="row">
@@ -105,7 +108,7 @@ function filterTable($query)
                         </tr>
 
                         <?php
-                            $sum = 0; $days=0;
+                            $sum = 0; $days=0; $date=0;
                             while($row = mysqli_fetch_array($search_result)):
                         ?>
                         <tr>
@@ -114,6 +117,9 @@ function filterTable($query)
                             ?></td>
                             <td><?php 
                                 echo $row['sale_date'];
+                                if ($date != $row['sale_date'])
+                                     $days += 1;
+                                $date=$row['sale_date'];
                             ?></td>
                             <td><?php 
                                 echo $row['stock_code'];
@@ -124,7 +130,6 @@ function filterTable($query)
                             <td><?php 
                                 echo $row['amount'];
                                 $sum += $row['amount'];
-                                $days += 1;
                             ?></td>
                         </tr>
                         <?php
@@ -132,6 +137,7 @@ function filterTable($query)
                         ?>
                     </table>
                     
+                    <!-- first row at bottom section -->
                     <div class="row">
                         <div class="col-sm-2">
                             <p><strong>Search by Date:</strong></p>
@@ -148,17 +154,19 @@ function filterTable($query)
                     </div>
                     <br/><br/>
                     
+                    <!-- second row -->
                     <div class="row">
                         <div class="col-sm-4">
                             <p><strong>Calculate Total Sales:</strong></p>
                         </div>
-                        <!-- calculate average
+                        <!-- calculate average -->
                         <div class="col-sm-4">
-                            #comment out - not per day but per entry based on the code
+                            <!-- if there are two same date separated by a different date, the day will + -->
                             <p><strong>Calculate Average Amount per Day:</strong></p>
-                        </div> -->
+                        </div>
                     </div>
                     
+                    <!-- third row -->
                     <div class="row">
                         <div class="col-sm-4">
                             <div ng-show="showme1">
@@ -169,7 +177,7 @@ function filterTable($query)
                             </div>
                         </div>
                         
-                        <!-- calculate average
+                        <!-- calculate average -->
                         <div class="col-sm-4">
                             <div ng-show="showme2">
                                 <p>RM {{<?php echo $sum;?>/<?php echo $days;?>}}/day</p>
@@ -177,10 +185,38 @@ function filterTable($query)
                             <div class="col-sm-4" ng-hide="showme2">
                                 <input type="button" value="Calculate" ng-click="showme2 = 1"/>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
-                </div>
-            </div> 
+                    <br/><br/>
+                    
+                    <!-- fourth row (inside overall div) #not nested -->
+                    <p><strong>Total quantity of medicine sold thus far</strong></p>
+                    <table class="table-striped table-hover" border="5" cellpadding="5" cellspacing="0" bordercolor="#808080" width="50%">
+                    <tr>
+                        <th>Stock Code</th>
+                        <th>Stock Name</th>
+                        <th>Quantity</th>
+                    </tr>
+                    <?php
+                        while($row = mysqli_fetch_array($medicine_sales)):
+                    ?>
+                    <tr>
+                        <td><?php 
+                            echo $row['stock_code'];
+                        ?></td>
+                        <td><?php 
+                            echo $row['stock_name'];
+                        ?></td>
+                        <td><?php 
+                            echo $row['med_quantity'];
+                        ?></td>
+                    </tr>
+                    <?php
+                        endwhile;
+                    ?>
+                    </table><br/><br/>
+                </div> <!-- end of col div in form -->
+            </div> <!-- end of row div in form -->
         </form>
     </div>
     
