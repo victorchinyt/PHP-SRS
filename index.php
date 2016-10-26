@@ -28,24 +28,35 @@
 		}	
 
     /*Check and Create table*/
-        $tableName2 = 'sales_record';
-        $strSql2 = "SHOW TABLES LIKE '$tableName2' ";
-        $queryResult2 = @mysql_query($strSql2, $dbConnection);	
+    $tableName2 = 'sales_record';
+    $strSql2 = "SHOW TABLES LIKE '$tableName2' ";
+    $queryResult2 = @mysql_query($strSql2, $dbConnection);	
 
-        if (mysql_num_rows(($queryResult2)) == 0){
-            $strSql2 = "CREATE TABLE $tableName2 (
-                            sale_id VARCHAR(255) NOT NULL,
-                            sale_date DATE NOT NULL,
-                            stock_code int(8) NOT NULL,
-                            stock_name varchar(255) NOT NULL,
-                            amount DECIMAL(10,2) NOT NULL)";
-            $queryResult2 = @mysql_query($strSql2, $dbConnection);
-            if($queryResult2){
-                echo "<p>Table: '$tableName2' has been succesfully created.</p>";
-            }else{
-                
-            }
-        }else 
+    if (mysql_num_rows(($queryResult2)) == 0){
+        $strSql2 = "CREATE TABLE $tableName2 (
+                        sale_id VARCHAR(255) NOT NULL,
+                        sale_date DATE NOT NULL,
+                        stock_code int(8) NOT NULL,
+                        stock_name varchar(255) NOT NULL,
+                        amount DECIMAL(10,2) NOT NULL,
+                        quantity int(4) NOT NULL,
+                        PRIMARY KEY(sale_id))";
+        $queryResult2 = @mysql_query($strSql2, $dbConnection);
+        if($queryResult2){
+            echo "<p>Table: '$tableName2' has been succesfully created.</p>";
+        }/*else{
+
+        }*/
+    }/*else*/
+        
+    // populate drop down list
+    $options = '';
+    $options .="<option></option>";
+    $filter=mysql_query("select distinct stock_code from stock_item");
+    while($row = mysql_fetch_array($filter)) {
+        $options .="<option>" . $row['stock_code'] . "</option>";
+    }
+    $menu=" . $options . ";
 ?>
 
 <!DOCTYPE html>
@@ -73,23 +84,19 @@
         {
             $Sid = $_POST['sid'];
             $Sdate = $_POST['date'];
-            $Scode = $_POST['scode'];
             $Sname = $_POST['sname'];
             $Samount = $_POST['amount'];
             $Squantity = $_POST['sq']; // first row
             $Scode = $_POST['scode']; // first rows
             
-            validate_name($Sid, $Sdate, $Scode);
             echo"<br><br>";
-        }
-
-        //validate the data
-        function validate_name($Sid, $Sdate, $Scode){
+            //validate the data
+            /*
             if (empty($Sid)){
 			
             echo "<p>Please enter the Sales ID!</p>";
 
-            }else if (empty($Sdate)){
+            }else */if (empty($Sdate)){
 
             echo "<p>Please enter the Stock Code!</p>";
 
@@ -100,8 +107,8 @@
             }else{ 
 
             //insert the data into stock_item table
-            $sql = "INSERT INTO sales_record (sale_id, sale_date, stock_code, stock_name, amount)
-            VALUES ('$Sid', '$Sdate', '$Scode', '$Sname', '$Samount')";
+            $sql = "INSERT INTO sales_record (sale_id, sale_date, stock_code, stock_name, amount, quantity)
+            VALUES ('$Sid', '$Sdate', '$Scode', '$Sname', '$Samount', '$Squantity')";
 
             // only edit for first row
             $sql_update = "UPDATE stock_item SET quantity=(quantity-$Squantity) WHERE stock_code=$Scode";
@@ -119,11 +126,13 @@
             } else {
                 echo "<p>Unable to update stock.</p>";
             }
+
+            }
         }
-}
+
             
-        
     ?> 
+    
     <div class="container">
         <?php
 			include("header.php");
@@ -159,7 +168,9 @@
                             <tbody>    
                                 <tr>
                                     <td>
-                                        <input type="text" name="scode" id="scode">
+                                        <select name='scode' id='scode' style="width: 100%">
+                                            <?php echo $menu ?>
+                                        </select>
                                     </td>
                                     <td>
                                         <input type="text" name="sname" id="sname">
@@ -181,7 +192,9 @@
                             <tbody>    
                                 <tr>
                                     <td>
-                                        <input type="text" name="scode2" id="scode">
+                                        <select name='scode2' id='scode2' style="width: 100%">
+                                            <?php echo $menu ?>
+                                        </select>
                                     </td>
                                     <td>
                                         <input type="text" name="sname2" id="sname">
@@ -190,7 +203,7 @@
                                         <input type="number" name="sq2" id="quantity" data-ng-model="num4" />
                                     </td>
                                     <td>
-                                        <input type="number" id="uprice" data-ng-model="num5" />
+                                        <input type="number" id="uprice2" data-ng-model="num5" />
                                     </td>
                                     <td>
                                         <input type="number" id="discount" data-ng-model="num6" data-ng-init="num6=0"/>
@@ -203,7 +216,9 @@
                             <tbody>    
                                 <tr>
                                     <td>
-                                        <input type="text" name="scode3" id="scode">
+                                        <select name='scode3' id='scode3' style="width: 100%">
+                                            <?php echo $menu ?>
+                                        </select>
                                     </td>
                                     <td>
                                         <input type="text" name="sname3" id="sname">
@@ -212,7 +227,7 @@
                                         <input type="number" name="sq3" id="quantity" data-ng-model="num7" />
                                     </td>
                                     <td>
-                                        <input type="number" id="uprice" data-ng-model="num8" />
+                                        <input type="number" id="uprice3" data-ng-model="num8" />
                                     </td>
                                     <td>
                                         <input type="number" id="discount" data-ng-model="num9" data-ng-init="num9=0"/>
@@ -225,7 +240,9 @@
                             <tbody>    
                                 <tr>
                                     <td>
-                                        <input type="text" name="scode4" id="scode">
+                                        <select name='scode4' id='scode4' style="width: 100%">
+                                            <?php echo $menu ?>
+                                        </select>
                                     </td>
                                     <td>
                                         <input type="text" name="sname4" id="sname">
@@ -234,7 +251,7 @@
                                         <input type="number" name="sq4" id="quantity" data-ng-model="num10" />
                                     </td>
                                     <td>
-                                        <input type="number" id="uprice" data-ng-model="num11" />
+                                        <input type="number" id="uprice4" data-ng-model="num11" />
                                     </td>
                                     <td>
                                         <input type="number" id="discount" data-ng-model="num12" data-ng-init="num12=0"/>
@@ -247,7 +264,9 @@
                             <tbody>    
                                 <tr>
                                     <td>
-                                        <input type="text" name="scode5" id="scode">
+                                        <select name='scode5' id='scode5' style="width: 100%">
+                                            <?php echo $menu ?>
+                                        </select>
                                     </td>
                                     <td>
                                         <input type="text" name="sname6" id="sname">
@@ -256,7 +275,7 @@
                                         <input type="number" name="sq5" id="quantity" data-ng-model="num13" />
                                     </td>
                                     <td>
-                                        <input type="number" id="uprice" data-ng-model="num14" />
+                                        <input type="number" id="uprice5" data-ng-model="num14" />
                                     </td>
                                     <td>
                                         <input type="number" id="discount" data-ng-model="num15" data-ng-init="num15=0"/>
