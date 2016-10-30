@@ -98,43 +98,45 @@ function filterTable($query)
                         </div>
                     </div><br/>
                     
-                    <table class="table table-striped table-hover" border="5" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#808080" width="100&#37">
-                        <tr>
-                            <th>Sale ID</th>
-                            <th>Date</th>
-                            <th>Stock Code</th>
-                            <th>Stock Name</th>
-                            <th>Amount</th>
-                        </tr>
+                    <table id="salesrecord" class="table table-striped table-hover" border="5" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#808080" width="100&#37">
+                        <div class="yesPrint">
+                            <tr>
+                                <th>Sale ID</th>
+                                <th>Date</th>
+                                <th>Stock Code</th>
+                                <th>Stock Name</th>
+                                <th>Amount</th>
+                            </tr>
 
-                        <?php
-                            $sum = 0; $days=0; $date=0;
-                            while($row = mysqli_fetch_array($search_result)):
-                        ?>
-                        <tr>
-                            <td><?php 
-                                echo $row['sale_id'];
-                            ?></td>
-                            <td><?php 
-                                echo $row['sale_date'];
-                                if ($date != $row['sale_date'])
-                                     $days += 1;
-                                $date=$row['sale_date'];
-                            ?></td>
-                            <td><?php 
-                                echo $row['stock_code'];
-                            ?></td>
-                            <td><?php 
-                                echo $row['stock_name'];
-                            ?></td>
-                            <td><?php 
-                                echo $row['amount'];
-                                $sum += $row['amount'];
-                            ?></td>
-                        </tr>
-                        <?php
-                            endwhile;
-                        ?>
+                            <?php
+                                $sum = 0; $days=0; $date=0;
+                                while($row = mysqli_fetch_array($search_result)):
+                            ?>
+                            <tr>
+                                <td><?php 
+                                    echo $row['sale_id'];
+                                ?></td>
+                                <td><?php 
+                                    echo $row['sale_date'];
+                                    if ($date != $row['sale_date'])
+                                         $days += 1;
+                                    $date=$row['sale_date'];
+                                ?></td>
+                                <td><?php 
+                                    echo $row['stock_code'];
+                                ?></td>
+                                <td><?php 
+                                    echo $row['stock_name'];
+                                ?></td>
+                                <td><?php 
+                                    echo $row['amount'];
+                                    $sum += $row['amount'];
+                                ?></td>
+                            </tr>
+                            <?php
+                                endwhile;
+                            ?>
+                        </div>
                     </table>
                     
                     <!-- first row at bottom section -->
@@ -150,6 +152,9 @@ function filterTable($query)
                         </div>
                         <div class="col-sm-2">
                             <input type="submit" name="searchByDate" value="Search"/>
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="button" name="printTable" id="printTable" value="Print" onClick="printData()"/>
                         </div>
                     </div>
                     <br/><br/>
@@ -191,7 +196,7 @@ function filterTable($query)
                     
                     <!-- fourth row (inside overall div) #not nested -->
                     <p><strong>Total quantity of medicine sold thus far</strong></p>
-                    <table class="table-striped table-hover" border="5" cellpadding="5" cellspacing="0" bordercolor="#808080" width="50%">
+                    <table id="quantitysold" class="table-striped table-hover" border="5" cellpadding="5" cellspacing="0" bordercolor="#808080" width="50%">
                     <tr>
                         <th>Stock Code</th>
                         <th>Stock Name</th>
@@ -215,11 +220,32 @@ function filterTable($query)
                         endwhile;
                     ?>
                     </table><br/><br/>
+                    <div class="col-sm-2">
+                        <input type="button" name="printTable" id="printTable" value="Print" onClick="printDatas()"/>
+                    </div>
                 </div> <!-- end of col div in form -->
             </div> <!-- end of row div in form -->
         </form>
     </div>
     
+    <script>
+        function printData(){
+            var divToPrint=document.getElementById("salesrecord");
+            newWin=window.open("");
+            newWin.document.write(divToPrint.outerHTML);
+            newWin.print();
+            newWin.close();
+        }
+    </script>
+    <script>
+        function printDatas(){
+            var divToPrint=document.getElementById("quantitysold");
+            newWin=window.open("");
+            newWin.document.write(divToPrint.outerHTML);
+            newWin.print();
+            newWin.close();
+        }
+    </script>
 	        <!-- jQuery – required for Bootstrap plugins) --> 
             <script src="js/jquery.min.js"></script> 
             <!-- All Bootstrap  plug-ins  file --> 

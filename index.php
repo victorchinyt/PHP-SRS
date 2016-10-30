@@ -154,7 +154,7 @@
             <div class="row">
                 <div class="col-sm-10">
                     <div class="table-responsive">
-                        <table class="table table-striped" border="5" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="grey">
+                        <table id="cashsale" class="table table-striped" border="5" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="grey">
                             <thead>
                                 <tr>
                                     <th>Stock Code</th>
@@ -302,7 +302,8 @@
                     </div><br />
                     <div class="row">
                         <div class="col-sm-12">
-                            <input class="btn" type="button" value="Print"> 
+                            
+                            <input type="button" name="printTable" id="printTable" value="Print" onClick="printData()"/>
                         </div>
                     </div><br />
                     <div class="row">
@@ -332,6 +333,15 @@
         </form>
     </div>
     
+    <script>
+        function printData(){
+            var divToPrint=document.getElementById("cashsale");
+            newWin=window.open("");
+            newWin.document.write(divToPrint.outerHTML);
+            newWin.print();
+            newWin.close();
+        }
+    </script>
 	        <!-- jQuery – required for Bootstrap plugins) --> 
             <script src="js/jquery.min.js"></script> 
             <!-- All Bootstrap  plug-ins  file --> 
