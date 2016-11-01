@@ -197,7 +197,7 @@
                         <div class="col-sm-8">
                             <span class="input-group">
                             <div class="input-group-addon">RM</div>
-                            <input type="text" class="form-control" name="mcost" id="mcost" placeholder="Amount"/>
+                            <input type="number" class="form-control" name="mcost" id="mcost" placeholder="Amount"/>
                             </span>
                         </div>
                     </div><br/>
@@ -212,7 +212,7 @@
                         <div class="col-sm-8">
                             <span class="input-group">
                             <div class="input-group-addon">RM</div>
-                            <input type="text" class="form-control" name="mprice" id="mprice" placeholder="Amount"/>
+                            <input type="number" class="form-control" name="mprice" id="mprice" placeholder="Amount"/>
                             </span>
                         </div>
                     </div>
