@@ -4,26 +4,32 @@ if(isset($_POST['search']))
     $saleToSearch = $_POST['saleToSearch'];
     // search in all table columns
     // using concat mysql function
-    $query = "SELECT * FROM `sales_record` WHERE CONCAT(`sale_id`, `sale_date`, `stock_code`, `stock_name`, `amount`) LIKE '%".$saleToSearch."%'";
+    // $query = "SELECT * FROM `sales_record` WHERE CONCAT(`sale_id`, `sale_date`, `stock_code`, `stock_name`, `amount`) LIKE '%".$saleToSearch."%'";
+    $query = "SELECT * FROM sales_record WHERE sale_id LIKE '%".$saleToSearch."%'";
     $search_result = filterTable($query);
+    // search for medicine
+    $medicinequery = "SELECT stock_code, stock_name, SUM(quantity) AS med_quantity FROM sales_record WHERE sale_id LIKE '%".$saleToSearch."%' GROUP BY stock_code";
+    $medicine_sales = filterTable2($medicinequery);
 }
  else {
+    // search for sales
     $query = "SELECT * FROM `sales_record`";
     $search_result = filterTable($query);
+    // search for medicine
     $medicinequery = "SELECT stock_code, stock_name, SUM(quantity) AS med_quantity FROM sales_record GROUP BY stock_code";
-    $medicine_sales = filterTable($medicinequery);
+    $medicine_sales = filterTable2($medicinequery);
 }
 
 if(isset($_POST['searchByDate']))
 {
     $date1 = $_POST['toCal1'];
     $date2 = $_POST['toCal2'];
+    // search for sales
     $query = "SELECT * FROM `sales_record` WHERE `sale_date` BETWEEN '$date1' AND '$date2'";
     $search_result = filterTable($query);
-}
- else {
-    $query = "SELECT * FROM `sales_record`";
-    $search_result = filterTable($query);
+    // search for medcine
+    $medicinequery = "SELECT stock_code, stock_name, SUM(quantity) AS med_quantity FROM sales_record WHERE `sale_date` BETWEEN '$date1' AND '$date2' GROUP BY stock_code";
+    $medicine_sales = filterTable2($medicinequery);
 }
 
 if(isset($_POST['delete']))
@@ -46,6 +52,12 @@ if(isset($_POST['delete']))
 
 // function to connect and execute the query
 function filterTable($query)
+{
+    $connect = mysqli_connect("localhost", "root", "", "srs_db");
+    $filter_Result = mysqli_query($connect, $query);
+    return $filter_Result;
+}
+function filterTable2($query)
 {
     $connect = mysqli_connect("localhost", "root", "", "srs_db");
     $filter_Result = mysqli_query($connect, $query);
@@ -198,35 +210,39 @@ function filterTable($query)
                     </div>
                     <br/><br/>
                     
-                    <!-- fourth row (inside overall div) #not nested -->
-                    <p><strong>Total quantity of medicine sold thus far</strong></p>
-                    <table id="quantitysold" class="table-striped table-hover" border="5" cellpadding="5" cellspacing="0" bordercolor="#808080" width="50%">
-                    <tr>
-                        <th>Stock Code</th>
-                        <th>Stock Name</th>
-                        <th>Quantity</th>
-                    </tr>
-                    <?php
-                        while($row = mysqli_fetch_array($medicine_sales)):
-                    ?>
-                    <tr>
-                        <td><?php 
-                            echo $row['stock_code'];
-                        ?></td>
-                        <td><?php 
-                            echo $row['stock_name'];
-                        ?></td>
-                        <td><?php 
-                            echo $row['med_quantity'];
-                        ?></td>
-                    </tr>
-                    <?php
-                        endwhile;
-                    ?>
-                    </table><br/><br/>
-                    <div class="col-sm-2">
-                        <input type="button" name="printTable" id="printTable" value="Print" onClick="printDatas()"/>
-                    </div>
+                    <!-- fourth row -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p><strong>Total quantity of medicine sold thus far</strong></p>
+                            <table id="quantitysold" class="table-striped table-hover" border="5" cellpadding="5" cellspacing="0" bordercolor="#808080" width="50%">
+                            <tr>
+                                <th>Stock Code</th>
+                                <th>Stock Name</th>
+                                <th>Quantity</th>
+                            </tr>
+                            <?php
+                                while($row = mysqli_fetch_array($medicine_sales)):
+                            ?>
+                            <tr>
+                                <td><?php 
+                                    echo $row['stock_code'];
+                                ?></td>
+                                <td><?php 
+                                    echo $row['stock_name'];
+                                ?></td>
+                                <td><?php 
+                                    echo $row['med_quantity'];
+                                ?></td>
+                            </tr>
+                            <?php
+                                endwhile;
+                            ?>
+                            </table><br/>
+                            <div class="col-sm-2">
+                                <input type="button" name="printTable" id="printTable" value="Print" onClick="printDatas()"/>
+                            </div>
+                        </div>
+                    </div> <!-- end of fourth row -->
                 </div> <!-- end of col div in form -->
             </div> <!-- end of row div in form -->
         </form>
