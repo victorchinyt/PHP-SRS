@@ -9,7 +9,7 @@ if(isset($_POST['search']))
     $search_result = filterTable($query);
     // search for medicine
     $medicinequery = "SELECT stock_code, stock_name, SUM(quantity) AS med_quantity FROM sales_record WHERE sale_id LIKE '%".$saleToSearch."%' GROUP BY stock_code";
-    $medicine_sales = filterTable2($medicinequery);
+    $medicine_sales = filterTable($medicinequery);
 }
  else {
     // search for sales
@@ -17,7 +17,7 @@ if(isset($_POST['search']))
     $search_result = filterTable($query);
     // search for medicine
     $medicinequery = "SELECT stock_code, stock_name, SUM(quantity) AS med_quantity FROM sales_record GROUP BY stock_code";
-    $medicine_sales = filterTable2($medicinequery);
+    $medicine_sales = filterTable($medicinequery);
 }
 
 if(isset($_POST['searchByDate']))
@@ -29,7 +29,7 @@ if(isset($_POST['searchByDate']))
     $search_result = filterTable($query);
     // search for medcine
     $medicinequery = "SELECT stock_code, stock_name, SUM(quantity) AS med_quantity FROM sales_record WHERE `sale_date` BETWEEN '$date1' AND '$date2' GROUP BY stock_code";
-    $medicine_sales = filterTable2($medicinequery);
+    $medicine_sales = filterTable($medicinequery);
 }
 
 if(isset($_POST['delete']))
@@ -52,12 +52,6 @@ if(isset($_POST['delete']))
 
 // function to connect and execute the query
 function filterTable($query)
-{
-    $connect = mysqli_connect("localhost", "root", "", "srs_db");
-    $filter_Result = mysqli_query($connect, $query);
-    return $filter_Result;
-}
-function filterTable2($query)
 {
     $connect = mysqli_connect("localhost", "root", "", "srs_db");
     $filter_Result = mysqli_query($connect, $query);
