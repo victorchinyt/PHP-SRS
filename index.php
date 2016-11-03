@@ -34,13 +34,14 @@
 
     if (mysql_num_rows(($queryResult2)) == 0){
         $strSql2 = "CREATE TABLE $tableName2 (
-                        sale_id VARCHAR(255) NOT NULL,
+                        sale_id int(4) NOT NULL AUTO_INCREMENT,
                         sale_date DATE NOT NULL,
                         stock_code int(8) NOT NULL,
                         stock_name varchar(255) NOT NULL,
                         amount DECIMAL(10,2) NOT NULL,
                         quantity int(4) NOT NULL,
-                        PRIMARY KEY(sale_id))";
+                        PRIMARY KEY(sale_id))
+                        AUTO_INCREMENT=1001";
         $queryResult2 = @mysql_query($strSql2, $dbConnection);
         if($queryResult2){
             echo "<p>Table: '$tableName2' has been succesfully created.</p>";
@@ -82,7 +83,6 @@
     <?php
         if(isset($_POST['BSubmit']))	
         {
-            $Sid = $_POST['sid'];
             $Sdate = $_POST['date'];
             $Sname = $_POST['sname'];
             $Samount = $_POST['amount'];
@@ -107,8 +107,8 @@
             }else{ 
 
             //insert the data into stock_item table
-            $sql = "INSERT INTO sales_record (sale_id, sale_date, stock_code, stock_name, amount, quantity)
-            VALUES ('$Sid', '$Sdate', '$Scode', '$Sname', '$Samount', '$Squantity')";
+            $sql = "INSERT INTO sales_record (sale_date, stock_code, stock_name, amount, quantity)
+            VALUES ('$Sdate', '$Scode', '$Sname', '$Samount', '$Squantity')";
 
             // only edit for first row
             $sql_update = "UPDATE stock_item SET quantity=(quantity-$Squantity) WHERE stock_code=$Scode";
@@ -145,7 +145,7 @@
         <form action="index.php" method="post">
             <div class="row">
                 <div class="col-sm-6">
-                    <p>Sales ID: <input type="text" name="sid" id="sid" required="true"/></p>
+                    <p>Sales ID: <input type="text" id="sid" disabled="true" placeholder="Auto-Incremented"/></p>
                 </div>
                 <div class="col-sm-6">
                     <p>Date: <input type="date" name="date" id="date" value="<?php echo date('Y-m-d'); ?>" /></p>

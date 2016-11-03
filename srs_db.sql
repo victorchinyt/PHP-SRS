@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 26, 2016 at 08:27 PM
+-- Generation Time: Nov 03, 2016 at 09:48 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `sales_record` (
-  `sale_id` varchar(255) NOT NULL,
+  `sale_id` int(4) NOT NULL,
   `sale_date` date NOT NULL,
   `stock_code` int(8) NOT NULL,
   `stock_name` varchar(255) NOT NULL,
@@ -40,11 +40,11 @@ CREATE TABLE `sales_record` (
 --
 
 INSERT INTO `sales_record` (`sale_id`, `sale_date`, `stock_code`, `stock_name`, `amount`, `quantity`) VALUES
-('1', '2016-10-26', 1, '123', '6.00', 2),
-('2', '2016-10-26', 1, '123', '10.00', 5),
-('3', '2016-10-26', 1, '123', '5.00', 5),
-('4', '2016-10-26', 1234, 'asd', '2.00', 1),
-('5', '2016-10-26', 1234, 'asd', '2.00', 1);
+(1001, '2016-11-03', 1, '123', '5.00', 5),
+(1002, '2016-11-03', 1, '123', '3.00', 3),
+(1003, '2016-11-03', 123, 'zxc', '4.00', 4),
+(1004, '2016-11-02', 12, 'qwe', '2.00', 2),
+(1005, '2016-11-02', 1, '246', '2.00', 2);
 
 -- --------------------------------------------------------
 
@@ -67,9 +67,9 @@ CREATE TABLE `stock_item` (
 --
 
 INSERT INTO `stock_item` (`stock_code`, `stock_name`, `description`, `location`, `quantity`, `costing`, `selling`) VALUES
-(1, '123', '', '', 345, '2.00', '4.00'),
-(12, 'qwe', 'we', 'weq', 123, '2.00', '4.00'),
-(123, 'zxc', '', '', 98, '0.00', '0.00'),
+(1, '123', '', '', 330, '2.00', '4.00'),
+(12, 'qwe', 'we', 'weq', 121, '2.00', '4.00'),
+(123, 'zxc', '', '', 94, '0.00', '0.00'),
 (1234, 'asd', '', '', 5, '0.00', '0.00');
 
 --
@@ -88,6 +88,15 @@ ALTER TABLE `sales_record`
 ALTER TABLE `stock_item`
   ADD PRIMARY KEY (`stock_code`);
 
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `sales_record`
+--
+ALTER TABLE `sales_record`
+  MODIFY `sale_id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1006;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
